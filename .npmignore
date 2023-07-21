@@ -1,0 +1,21 @@
+# node
+node_modules
+package-lock.json
+yarn.lock
+
+# definitions
+!**/*.d.ts
+!*.d.ts
+
+# jest
+jest.config.ts
+tests
+
+# ides
+.vscode
+
+# env
+.env
+
+# lib
+lib
