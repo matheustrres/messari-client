@@ -41,6 +41,11 @@ describe('MessariClient', (): void => {
 
       expect(metrics.status.error_code).toBeUndefined();
       expect(metrics.data).toBeDefined();
+      expect(metrics.data!.id).toBeDefined();
+      expect(metrics.data!.name).toBeDefined();
+      expect(metrics.data!.market_data).toBeDefined();
+      expect(metrics.data!.market_data).toBeDefined();
+      expect(metrics.data!.marketcap).toBeDefined();
     });
   });
 
@@ -50,15 +55,21 @@ describe('MessariClient', (): void => {
 
       expect(assets.status.error_code).toBeUndefined();
       expect(assets.data).toBeDefined();
+      expect(assets.data![0].id).toBeDefined();
+      expect(assets.data![0].name).toBeDefined();
+      expect(assets.data![0].metrics).toBeDefined();
     });
   });
 
   describe('listAllNews', (): void => {
     it('should list all news and analysis for all assets', async (): Promise<void> => {
-      const news = await client.listAllNews();
+      const allNews = await client.listAllNews();
 
-      expect(news.status.error_code).toBeUndefined();
-      expect(news.data).toBeDefined();
+      expect(allNews.status.error_code).toBeUndefined();
+      expect(allNews.data).toBeDefined();
+      expect(allNews.data![0].id).toBeDefined();
+      expect(allNews.data![0].title).toBeDefined();
+      expect(allNews.data![0].content).toBeDefined();
     });
   });
 
@@ -68,6 +79,9 @@ describe('MessariClient', (): void => {
 
       expect(assetNews.status.error_code).toBeUndefined();
       expect(assetNews.data).toBeDefined();
+      expect(assetNews.data![0].id).toBeDefined();
+      expect(assetNews.data![0].title).toBeDefined();
+      expect(assetNews.data![0].content).toBeDefined();
     });
   })
 
