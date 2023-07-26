@@ -1,7 +1,7 @@
 
 # Messari Client
 
-A Node.js client for interacting with the Messari API, which provides crypto research, data and tools.
+A Node.js client for interacting with the **[Messari API](http://messari.io)**, which provides crypto research, data and tools.
 
 ## Installation
 
