@@ -1,12 +1,17 @@
 import {
   MessariAllAssets,
+  MessariAssetAPIResponse,
   MessariAsset,
-  MessariAssetCommomProps,
-  MessariAssetMarketDataProps,
   MessariAssetMetrics,
   MessariAllNews,
   MessariAssetNews,
   QueryResult,
+  MessariAssetMetricsAPIResponse,
+  MessariAssetMarketDataAPIResponse,
+  MessariAssetMarketData,
+  MessariAllAssetsAPIResponse,
+  MessariAllNewsAPIResponse,
+  MessariAssetNewsAPIResponse,
 } from './typings';
 import { MessariError } from './utils/errors/messari/messari.error';
 import { Request } from './utils/request';
@@ -47,11 +52,11 @@ export class MessariClient {
    * Get the basic metadata for an asset
    * 
    * @param {string} assetKey - The asset's ID, slug or symbol
-   * @returns {Promise<QueryResult<MessariAssetCommomProps>>}
+   * @returns {Promise<QueryResult<MessariAsset>>}
    */
-  public async getAsset(assetKey: string): Promise<QueryResult<MessariAssetCommomProps>> {
+  public async getAsset(assetKey: string): Promise<QueryResult<MessariAsset>> {
     const response = await this.request.get<
-      MessariAsset
+      MessariAssetAPIResponse
     >(`v1/assets/${assetKey}`);
 
     if (response instanceof MessariError) {
@@ -70,11 +75,11 @@ export class MessariClient {
    * Get the quantitative metrics for an asset
    * 
    * @param {string} assetKey - The asset's ID, slug or symbol
-   * @returns {Promise<QueryResult<MessariAssetMetrics['data']>>}
+   * @returns {Promise<QueryResult<MessariAssetMetrics>>}
    */
-  public async getAssetMetrics(assetKey: string): Promise<QueryResult<MessariAssetMetrics['data']>> {
+  public async getAssetMetrics(assetKey: string): Promise<QueryResult<MessariAssetMetrics>> {
     const response = await this.request.get<
-      MessariAssetMetrics
+      MessariAssetMetricsAPIResponse
     >(`v1/assets/${assetKey}/metrics`);
 
     if (response instanceof MessariError) {
@@ -89,36 +94,37 @@ export class MessariClient {
     }
   }
 
-
   /**
    * Get the market data for an asset
    * 
    * @param {string} assetKey - The asset's ID, slug or symbol
-   * @returns {Promise<QueryResult<MessariAssetMarketDataProps>>}
+   * @returns {Promise<QueryResult<MessariAssetMarketData>>}
    */
-  public async getAssetMarketData(assetKey: string): Promise<QueryResult<MessariAssetMarketDataProps>> {
-    const response: QueryResult<MessariAssetMetrics['data']> = await this.getAssetMetrics(assetKey);
+  public async getAssetMarketData(assetKey: string): Promise<QueryResult<MessariAssetMarketData>> {
+    const response = await this.request.get<
+      MessariAssetMarketDataAPIResponse
+    >(`v1/assets/${assetKey}/metrics/market-data`);
 
-    const assetMarketData: MessariAssetMarketDataProps =
-      !response.status.error_code &&
-      response.data.market_data;
+    if (response instanceof MessariError) {
+      return this.$handleError(response);
+    }
 
     return {
       status: {
         timestamp: new Date().toISOString(),
       },
-      data: assetMarketData,
+      data: response.data,
     }
   }
 
   /**
    * Get the list of all assets and their metrics
    * 
-   * @returns {Promise<QueryResult<MessariAllAssets['data']>>}
+   * @returns {Promise<QueryResult<MessariAllAssets>>}
    */
-  public async listAllAssets(): Promise<QueryResult<MessariAllAssets['data']>> {
+  public async listAllAssets(): Promise<QueryResult<MessariAllAssets>> {
     const response = await this.request.get<
-      MessariAllAssets
+      MessariAllAssetsAPIResponse
     >(`v2/assets`);
 
     if (response instanceof MessariError) {
@@ -136,11 +142,11 @@ export class MessariClient {
   /**
    * Get the latest news and analysis for all assets
    * 
-   * @returns {Promise<QueryResult<MessariAllNews['data']>>}
+   * @returns {Promise<QueryResult<MessariAllNews>>}
    */
-  public async listAllNews(): Promise<QueryResult<MessariAllNews['data']>> {
+  public async listAllNews(): Promise<QueryResult<MessariAllNews>> {
     const response = await this.request.get<
-      MessariAllNews
+      MessariAllNewsAPIResponse
     >('v1/news');
 
     if (response instanceof MessariError) {
@@ -159,11 +165,11 @@ export class MessariClient {
    * Get the latest news and analysis for an asset
    * 
    * @param {string} assetKey - The asset's ID, slug or symbol
-   * @returns {Promise<QueryResult<MessariAssetNews['data']>>}
+   * @returns {Promise<QueryResult<MessariAssetNews[]>>}
    */
-  public async listAssetNews(assetKey: string): Promise<QueryResult<MessariAssetNews['data']>> {
+  public async listAssetNews(assetKey: string): Promise<QueryResult<MessariAssetNews[]>> {
     const response = await this.request.get<
-      MessariAssetNews
+      MessariAssetNewsAPIResponse
     >(`v1/news/${assetKey}`);
 
     if (response instanceof MessariError) {
