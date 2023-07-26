@@ -60,7 +60,7 @@ export class MessariClient {
     >(`v1/assets/${assetKey}`);
 
     if (response instanceof MessariError) {
-      return this.$handleError(response);
+      return this.sendErrorResponse(response);
     }
 
     return {
@@ -83,7 +83,7 @@ export class MessariClient {
     >(`v1/assets/${assetKey}/metrics`);
 
     if (response instanceof MessariError) {
-      return this.$handleError(response);
+      return this.sendErrorResponse(response);
     }
 
     return {
@@ -106,7 +106,7 @@ export class MessariClient {
     >(`v1/assets/${assetKey}/metrics/market-data`);
 
     if (response instanceof MessariError) {
-      return this.$handleError(response);
+      return this.sendErrorResponse(response);
     }
 
     return {
@@ -128,7 +128,7 @@ export class MessariClient {
     >(`v2/assets`);
 
     if (response instanceof MessariError) {
-      return this.$handleError(response);
+      return this.sendErrorResponse(response);
     }
 
     return {
@@ -150,7 +150,7 @@ export class MessariClient {
     >('v1/news');
 
     if (response instanceof MessariError) {
-      return this.$handleError(response);
+      return this.sendErrorResponse(response);
     }
 
     return {
@@ -173,7 +173,7 @@ export class MessariClient {
     >(`v1/news/${assetKey}`);
 
     if (response instanceof MessariError) {
-      return this.$handleError(response);
+      return this.sendErrorResponse(response);
     }
 
     return {
@@ -184,7 +184,7 @@ export class MessariClient {
     }
   }
 
-  private $handleError(error: MessariError): QueryResult {
+  private sendErrorResponse(error: MessariError): QueryResult {
     return {
       status: {
         timestamp: error.timestamp,
