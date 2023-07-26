@@ -19,3 +19,8 @@ tests
 
 # lib
 lib
+
+# linters
+.eslintrc
+.eslintignore
+.prettierrc
