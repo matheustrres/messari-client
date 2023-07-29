@@ -3,14 +3,14 @@ import {
   MessariAssetAPIResponse,
   MessariAsset,
   MessariAssetMetrics,
-  MessariAllNews,
+  MessariAllAssetsNews,
   MessariAssetNews,
   QueryResult,
   MessariAssetMetricsAPIResponse,
   MessariAssetMarketDataAPIResponse,
   MessariAssetMarketData,
   MessariAllAssetsAPIResponse,
-  MessariAllNewsAPIResponse,
+  MessariAllAssetsNewsAPIResponse,
   MessariAssetNewsAPIResponse,
 } from './typings';
 import { MessariError } from './utils/errors/messari/messari.error';
@@ -144,9 +144,9 @@ export class MessariClient {
    * 
    * @returns {Promise<QueryResult<MessariAllNews>>}
    */
-  public async listAllNews(): Promise<QueryResult<MessariAllNews>> {
+  public async listAllNews(): Promise<QueryResult<MessariAllAssetsNews>> {
     const response = await this.request.get<
-      MessariAllNewsAPIResponse
+      MessariAllAssetsNewsAPIResponse
     >('v1/news');
 
     if (response instanceof MessariError) {

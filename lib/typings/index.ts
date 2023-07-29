@@ -87,29 +87,10 @@ export type MessariAllAssetsAPIResponse = {
 
 // ---
 
-export type MessariAllNews = [
-	{
-		id: string;
-		title: string;
-		content: string;
-		references: Array<{
-			name: string;
-			url: string;
-		}>;
-		previewImage: string;
-		pdfUrl: string;
-		published_at: string;
-		author: {
-			name: string;
-			url: string;
-		};
-		tags: string[];
-		url: string;
-	},
-];
+export type MessariAllAssetsNews = MessariAssetNews[];
 
-export type MessariAllNewsAPIResponse = {
-	data: MessariAllNews;
+export type MessariAllAssetsNewsAPIResponse = {
+	data: MessariAllAssetsNews;
 };
 
 // ---
