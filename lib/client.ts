@@ -44,7 +44,7 @@ export class MessariClient {
     this.messariApiKey = props.key;
 
     this.request = new Request({
-      messariHeaderApiKey: this.messariApiKey
+      messariApiKey: this.messariApiKey
     });
   }
 

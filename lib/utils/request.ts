@@ -5,7 +5,7 @@ import { QueryResult } from '../typings';
 import { MessariError } from './errors/messari.error';
 
 type RequestConfigProps = {
-	messariHeaderApiKey: string;
+	messariApiKey: string;
 };
 
 export class Request {
@@ -21,7 +21,7 @@ export class Request {
 		const res = await this.request(`https://data.messari.io/api/${endpoint}`, {
 			method: 'GET',
 			headers: {
-				'x-messari-api-key': this.config.messariHeaderApiKey,
+				'x-messari-api-key': this.config.messariApiKey,
 			},
 		});
 
