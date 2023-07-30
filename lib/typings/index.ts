@@ -28,21 +28,33 @@ export type MessariAssetAPIResponse = QueryResult<MessariAsset>;
 
 // ---
 
+export type MessariAssetMetricsAllTimeHigh = {
+	price: number;
+	at: string;
+	days_since: string;
+	parcent_down: number;
+	breakeven_multiple: number;
+};
+
+// ROI - Return Over Investment
+export type MessariAssetMetricsROIData = {
+	percent_change_last_1_week: number;
+	percent_change_last_1_month: number;
+	percent_change_last_3_months: number;
+	percent_change_last_1_year: number;
+};
+
 export type MessariAssetMetrics = {
 	id: string;
 	serial_id?: number;
 	symbol: string;
 	name: string;
 	slug: string;
+	all_time_high: MessariAssetMetricsAllTimeHigh;
 	market_data: MessariAssetMarketData;
 	marketcap: MessariAssetMarketCap;
-	roi_data: {
-		percent_change_last_1_week: number;
-		percent_change_last_1_month: number;
-		percent_change_last_3_months: number;
-		percent_change_last_1_year: number;
-	};
-	reddit?: MessariAssetReddit;
+	reddit: MessariAssetReddit;
+	roi_data: MessariAssetMetricsROIData;
 };
 
 export type MessariAssetMetricsAPIResponse = QueryResult<MessariAssetMetrics>;
@@ -128,8 +140,8 @@ export type MessariAssetMarketOHLCV = {
 };
 
 export type MessariAssetReddit = {
-	active_user_count: number;
-	subscribers: number;
+	active_user_count: number | null;
+	subscribers: number | null;
 };
 
 // ---
