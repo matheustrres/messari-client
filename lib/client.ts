@@ -13,7 +13,7 @@ import {
   MessariAllAssetsNewsAPIResponse,
   MessariAssetNewsAPIResponse,
 } from './typings';
-import { MessariError } from './utils/errors/messari/messari.error';
+import { MessariError } from './utils/errors/messari.error';
 import { Request } from './utils/request';
 
 type MessariClientProps = {
