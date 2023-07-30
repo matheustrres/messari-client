@@ -26,7 +26,6 @@ type MessariClientProps = {
  */
 export class MessariClient {
 	private request: Request;
-	private messariApiKey: string;
 
 	static validate(apiKey: string): void {
 		if (!apiKey) {
@@ -42,10 +41,8 @@ export class MessariClient {
 	constructor(props: MessariClientProps) {
 		MessariClient.validate(props.key);
 
-		this.messariApiKey = props.key;
-
 		this.request = new Request({
-			messariApiKey: this.messariApiKey,
+			messariApiKey: props.key,
 		});
 	}
 
