@@ -6,9 +6,7 @@ export type MessariAsset = {
 	slug: string;
 };
 
-export type MessariAssetAPIResponse = {
-	data: MessariAsset;
-};
+export type MessariAssetAPIResponse = QueryResult<MessariAsset>;
 
 // ---
 
@@ -29,9 +27,7 @@ export type MessariAssetMetrics = {
 	reddit?: MessariAssetReddit;
 };
 
-export type MessariAssetMetricsAPIResponse = {
-	data: MessariAssetMetrics;
-};
+export type MessariAssetMetricsAPIResponse = QueryResult<MessariAssetMetrics>;
 
 // ---
 
@@ -52,9 +48,8 @@ export type MessariAssetMarketData = {
 	last_trade_at?: string | null;
 };
 
-export type MessariAssetMarketDataAPIResponse = {
-	data: MessariAssetMarketData;
-};
+export type MessariAssetMarketDataAPIResponse =
+	QueryResult<MessariAssetMarketData>;
 
 // ---
 
@@ -81,17 +76,13 @@ export type MessariAllAssets = [
 	},
 ];
 
-export type MessariAllAssetsAPIResponse = {
-	data: MessariAllAssets;
-};
+export type MessariAllAssetsAPIResponse = QueryResult<MessariAllAssets>;
 
 // ---
 
 export type MessariAllAssetsNews = MessariAssetNews[];
 
-export type MessariAllAssetsNewsAPIResponse = {
-	data: MessariAllAssetsNews;
-};
+export type MessariAllAssetsNewsAPIResponse = QueryResult<MessariAllAssetsNews>;
 
 // ---
 
@@ -114,9 +105,7 @@ export type MessariAssetNews = {
 	url: string;
 };
 
-export type MessariAssetNewsAPIResponse = {
-	data: MessariAssetNews[];
-};
+export type MessariAssetNewsAPIResponse = QueryResult<MessariAssetNews[]>;
 
 // ---
 
