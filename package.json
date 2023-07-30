@@ -23,8 +23,8 @@
     "build": "tsc --build",
     "bundle": "npm run build && npm pack",
     "test": "dotenv -e .env -- jest",
-    "format": "prettier --write ./lib/**/*.ts",
-    "lint": "eslint ./lib/**/*.ts --fix"
+    "format": "prettier --write ./lib",
+    "lint": "eslint ./lib --fix"
   },
   "dependencies": {
     "undici": "^5.14.0"
