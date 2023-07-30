@@ -6,6 +6,24 @@ export type MessariAsset = {
 	slug: string;
 };
 
+export type MessariAssetWithMetrics = {
+	id: string;
+	serial_id?: number;
+	symbol: string;
+	name: string;
+	slug: string;
+	metrics: {
+		id: string;
+		serial_id?: number;
+		symbol: string;
+		name: string;
+		slug: string;
+		market_data: MessariAssetMarketData;
+		marketcap: MessariAssetMarketCap;
+		reddit?: MessariAssetReddit;
+	};
+};
+
 export type MessariAssetAPIResponse = QueryResult<MessariAsset>;
 
 // ---
@@ -54,30 +72,11 @@ export type MessariAssetMarketDataAPIResponse = QueryResult<{
 
 // ---
 
-export type MessariAllAssets = [
-	{
-		id: string;
-		serial_id?: number;
-		symbol: string;
-		name: string;
-		slug: string;
-		metrics: {
-			id: string;
-			serial_id?: number;
-			symbol: string;
-			name: string;
-			slug: string;
-			market_data: MessariAssetMarketData;
-			marketcap: MessariAssetMarketCap;
-			reddit?: {
-				active_user_count: number;
-				subscribers: number;
-			};
-		};
-	},
-];
+export type MessariAllAssets = MessariAssetWithMetrics[];
 
-export type MessariAllAssetsAPIResponse = QueryResult<MessariAllAssets>;
+export type MessariAllAssetsAPIResponse = QueryResult<
+	MessariAssetWithMetrics[]
+>;
 
 // ---
 
