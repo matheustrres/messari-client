@@ -53,7 +53,7 @@ describe('MessariClient', (): void => {
   });
 
   describe('listAllAssets', (): void => {
-    it('should list all or few assets', async (): Promise<void> => {
+    it('should list all assets', async (): Promise<void> => {
       const assets = await client.listAllAssets();
 
       expect(assets.status.error_code).toBeUndefined();
@@ -61,6 +61,18 @@ describe('MessariClient', (): void => {
       expect(assets.data![0].id).toBeDefined();
       expect(assets.data![0].name).toBeDefined();
       expect(assets.data![0].metrics).toBeDefined();
+    });
+
+    it('should list only 5 assets', async (): Promise<void> => {
+      const assets = await client.listAllAssets({
+        limit: 5,
+      });
+
+      expect(assets.status.error_code).toBeUndefined();
+      expect(assets.data).toBeDefined();
+      expect(assets.data!.length).toBe(5);
+      expect(assets.data![0].id).toBeDefined();
+      expect(assets.data![5]).toBeFalsy();
     });
   });
 
@@ -73,6 +85,18 @@ describe('MessariClient', (): void => {
       expect(allNews.data![0].id).toBeDefined();
       expect(allNews.data![0].title).toBeDefined();
       expect(allNews.data![0].content).toBeDefined();
+    });
+
+    it('should list only 5 news and analysis for all assets', async (): Promise<void> => {
+      const news = await client.listAllNews({
+        limit: 5,
+      });
+      
+      expect(news.status.error_code).toBeUndefined();
+      expect(news.data).toBeDefined();
+      expect(news.data!.length).toBe(5);
+      expect(news.data![0].author).toBeDefined();
+      expect(news.data![5]).toBeFalsy();
     });
   });
 
