@@ -48,8 +48,9 @@ export type MessariAssetMarketData = {
 	last_trade_at?: string | null;
 };
 
-export type MessariAssetMarketDataAPIResponse =
-	QueryResult<MessariAssetMarketData>;
+export type MessariAssetMarketDataAPIResponse = QueryResult<{
+	market_data: MessariAssetMarketData;
+}>;
 
 // ---
 

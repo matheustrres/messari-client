@@ -113,7 +113,7 @@ export class MessariClient {
       status: {
         timestamp: new Date().toISOString(),
       },
-      data: response.data,
+      data: response.data.market_data,
     }
   }
 
