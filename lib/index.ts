@@ -1,6 +1,6 @@
 export type {
   MessariAllAssets,
-  MessariAllNews,
+  MessariAllAssetsNews,
   MessariAsset,
   MessariAssetReddit,
   MessariAssetMarketCap,
