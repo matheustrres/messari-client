@@ -1,17 +1,17 @@
 import {
-  MessariAllAssets,
-  MessariAssetAPIResponse,
-  MessariAsset,
-  MessariAssetMetrics,
-  MessariAllAssetsNews,
-  MessariAssetNews,
-  QueryResult,
-  MessariAssetMetricsAPIResponse,
-  MessariAssetMarketDataAPIResponse,
-  MessariAssetMarketData,
   MessariAllAssetsAPIResponse,
   MessariAllAssetsNewsAPIResponse,
+  MessariAllAssetsNews,
+  MessariAllAssets,
+  MessariAssetAPIResponse,
+  MessariAssetMarketDataAPIResponse,
+  MessariAssetMarketData,
+  MessariAssetMetricsAPIResponse,
+  MessariAssetMetrics,
   MessariAssetNewsAPIResponse,
+  MessariAssetNews,
+  MessariAsset,
+  QueryResult,
 } from './typings';
 import { MessariError } from './utils/errors/messari.error';
 import { Request } from './utils/request';
