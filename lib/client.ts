@@ -14,6 +14,7 @@ import {
 	QueryResult,
 } from './typings';
 import { MessariError } from './utils/errors/messari.error';
+import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
 import { Request } from './utils/request';
 
 type MessariClientProps = {
@@ -56,7 +57,7 @@ export class MessariClient {
 	 */
 	public async getAsset(assetKey: string): Promise<QueryResult<MessariAsset>> {
 		const response = await this.request.get<MessariAssetAPIResponse>(
-			`v1/assets/${assetKey}`,
+			buildAPIEndpoint(`v1/assets/${assetKey}`),
 		);
 
 		if (response instanceof MessariError) {
@@ -81,7 +82,7 @@ export class MessariClient {
 		assetKey: string,
 	): Promise<QueryResult<MessariAssetMetrics>> {
 		const response = await this.request.get<MessariAssetMetricsAPIResponse>(
-			`v1/assets/${assetKey}/metrics`,
+			buildAPIEndpoint(`v1/assets/${assetKey}/metrics`),
 		);
 
 		if (response instanceof MessariError) {
@@ -106,7 +107,7 @@ export class MessariClient {
 		assetKey: string,
 	): Promise<QueryResult<MessariAssetMarketData>> {
 		const response = await this.request.get<MessariAssetMarketDataAPIResponse>(
-			`v1/assets/${assetKey}/metrics/market-data`,
+			buildAPIEndpoint(`v1/assets/${assetKey}/metrics/market-data`),
 		);
 
 		if (response instanceof MessariError) {
@@ -126,9 +127,11 @@ export class MessariClient {
 	 *
 	 * @returns {Promise<QueryResult<MessariAllAssets>>}
 	 */
-	public async listAllAssets(): Promise<QueryResult<MessariAllAssets>> {
+	public async listAllAssets(
+		paginationOptions?: PaginationOptions,
+	): Promise<QueryResult<MessariAllAssets>> {
 		const response = await this.request.get<MessariAllAssetsAPIResponse>(
-			`v2/assets`,
+			buildAPIEndpoint('v2/assets', paginationOptions),
 		);
 
 		if (response instanceof MessariError) {
@@ -148,9 +151,11 @@ export class MessariClient {
 	 *
 	 * @returns {Promise<QueryResult<MessariAllNews>>}
 	 */
-	public async listAllNews(): Promise<QueryResult<MessariAllAssetsNews>> {
+	public async listAllNews(
+		paginationOptions?: PaginationOptions,
+	): Promise<QueryResult<MessariAllAssetsNews>> {
 		const response = await this.request.get<MessariAllAssetsNewsAPIResponse>(
-			'v1/news',
+			buildAPIEndpoint('v1/news', paginationOptions),
 		);
 
 		if (response instanceof MessariError) {
@@ -175,7 +180,7 @@ export class MessariClient {
 		assetKey: string,
 	): Promise<QueryResult<MessariAssetNews[]>> {
 		const response = await this.request.get<MessariAssetNewsAPIResponse>(
-			`v1/news/${assetKey}`,
+			buildAPIEndpoint(`v1/news/${assetKey}`),
 		);
 
 		if (response instanceof MessariError) {
