@@ -148,7 +148,7 @@ export class MessariClient {
 	 * @template {type} T
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async listAllNews<
+	public async listAllAssetsNews<
 		T extends Array<Record<string, any>> = MessariAssetNews[],
 	>(paginationOptions?: PaginationOptions): Promise<QueryResult<T>> {
 		const response = await this.request.get<QueryResult<T>>(

@@ -76,7 +76,7 @@ describe('MessariClient', (): void => {
 
   describe('listAllNews', (): void => {
     it('should list all news and analysis for all assets', async (): Promise<void> => {
-      const allNews = await client.listAllNews();
+      const allNews = await client.listAllAssetsNews();
 
       expect(allNews.status.error_code).toBeUndefined();
       expect(allNews.data).toBeDefined();
@@ -86,7 +86,7 @@ describe('MessariClient', (): void => {
     });
 
     it('should list only 5 news and analysis for all assets', async (): Promise<void> => {
-      const news = await client.listAllNews({
+      const news = await client.listAllAssetsNews({
         limit: 5,
       });
       
