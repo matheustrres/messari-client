@@ -40,7 +40,7 @@ export class MessariClient {
 	}
 
 	/**
-	 * Get the basic metadata for an asset
+	 * Get basic metadata for an asset.
 	 *
 	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
@@ -66,7 +66,7 @@ export class MessariClient {
 	}
 
 	/**
-	 * Get the quantitative metrics for an asset
+	 * Get all the quantitative metrics for an asset.
 	 *
 	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
@@ -92,7 +92,8 @@ export class MessariClient {
 	}
 
 	/**
-	 * Get the market data for an asset
+	 * Get the latest market-data for an asset. This data is also included in the
+	 * `client.getAssetMetrics` method, but if all you need is market-data, use this.
 	 *
 	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
@@ -118,9 +119,12 @@ export class MessariClient {
 	}
 
 	/**
-	 * Get the list of all assets and their metrics
+	 * Get the paginated list of all assets and their metrics.
 	 *
 	 * @template {type} T
+	 * @param {PaginationOptions} [paginationOptions] - The options to use for pagination
+	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
+	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async listAllAssets<
@@ -143,9 +147,12 @@ export class MessariClient {
 	}
 
 	/**
-	 * Get the latest news and analysis for all assets
+	 * Get the paginated list of latest news and analysis for all assets.
 	 *
 	 * @template {type} T
+	 * @param {PaginationOptions} [paginationOptions] - The options to use for pagination
+	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
+	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async listAllAssetsNews<
@@ -168,17 +175,23 @@ export class MessariClient {
 	}
 
 	/**
-	 * Get the latest news and analysis for an asset
+	 * Get the paginated list of latest news and analysis for an asset.
 	 *
 	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
+	 * @param {PaginationOptions} [paginationOptions] - The options to use for pagination
+	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
+	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async listAssetNews<
 		T extends Array<Record<string, any>> = MessariAssetNews[],
-	>(assetKey: string): Promise<QueryResult<T>> {
+	>(
+		assetKey: string,
+		paginationOptions?: PaginationOptions,
+	): Promise<QueryResult<T>> {
 		const response = await this.request.get<QueryResult<T>>(
-			buildAPIEndpoint(`v1/news/${assetKey}`),
+			buildAPIEndpoint(`v1/news/${assetKey}`, paginationOptions),
 		);
 
 		if (response instanceof MessariError) {
