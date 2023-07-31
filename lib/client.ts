@@ -1,15 +1,8 @@
 import {
-	MessariAllAssetsAPIResponse,
-	MessariAllAssetsNewsAPIResponse,
-	MessariAllAssetsNews,
-	MessariAllAssets,
-	MessariAssetAPIResponse,
-	MessariAssetMarketDataAPIResponse,
 	MessariAssetMarketData,
-	MessariAssetMetricsAPIResponse,
 	MessariAssetMetrics,
-	MessariAssetNewsAPIResponse,
 	MessariAssetNews,
+	MessariAssetWithMetrics,
 	MessariAsset,
 	QueryResult,
 } from './typings';
@@ -49,11 +42,14 @@ export class MessariClient {
 	/**
 	 * Get the basic metadata for an asset
 	 *
+	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @returns {Promise<QueryResult<MessariAsset>>}
+	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async getAsset(assetKey: string): Promise<QueryResult<MessariAsset>> {
-		const response = await this.request.get<MessariAssetAPIResponse>(
+	public async getAsset<T = MessariAsset>(
+		assetKey: string,
+	): Promise<QueryResult<T>> {
+		const response = await this.request.get<QueryResult<T>>(
 			buildAPIEndpoint(`v1/assets/${assetKey}`),
 		);
 
@@ -72,13 +68,14 @@ export class MessariClient {
 	/**
 	 * Get the quantitative metrics for an asset
 	 *
+	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @returns {Promise<QueryResult<MessariAssetMetrics>>}
+	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async getAssetMetrics(
+	public async getAssetMetrics<T = MessariAssetMetrics>(
 		assetKey: string,
-	): Promise<QueryResult<MessariAssetMetrics>> {
-		const response = await this.request.get<MessariAssetMetricsAPIResponse>(
+	): Promise<QueryResult<T>> {
+		const response = await this.request.get<QueryResult<T>>(
 			buildAPIEndpoint(`v1/assets/${assetKey}/metrics`),
 		);
 
@@ -97,13 +94,14 @@ export class MessariClient {
 	/**
 	 * Get the market data for an asset
 	 *
+	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @returns {Promise<QueryResult<MessariAssetMarketData>>}
+	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async getAssetMarketData(
+	public async getAssetMarketData<T = MessariAssetMarketData>(
 		assetKey: string,
-	): Promise<QueryResult<MessariAssetMarketData>> {
-		const response = await this.request.get<MessariAssetMarketDataAPIResponse>(
+	): Promise<QueryResult<T>> {
+		const response = await this.request.get<QueryResult<T>>(
 			buildAPIEndpoint(`v1/assets/${assetKey}/metrics/market-data`),
 		);
 
@@ -115,19 +113,20 @@ export class MessariClient {
 			status: {
 				timestamp: new Date().toISOString(),
 			},
-			data: response.data.market_data,
+			data: response.data,
 		};
 	}
 
 	/**
 	 * Get the list of all assets and their metrics
 	 *
-	 * @returns {Promise<QueryResult<MessariAllAssets>>}
+	 * @template {type} T
+	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async listAllAssets(
-		paginationOptions?: PaginationOptions,
-	): Promise<QueryResult<MessariAllAssets>> {
-		const response = await this.request.get<MessariAllAssetsAPIResponse>(
+	public async listAllAssets<
+		T extends Array<Record<string, any>> = MessariAssetWithMetrics[],
+	>(paginationOptions?: PaginationOptions): Promise<QueryResult<T>> {
+		const response = await this.request.get<QueryResult<T>>(
 			buildAPIEndpoint('v2/assets', paginationOptions),
 		);
 
@@ -146,12 +145,13 @@ export class MessariClient {
 	/**
 	 * Get the latest news and analysis for all assets
 	 *
-	 * @returns {Promise<QueryResult<MessariAllNews>>}
+	 * @template {type} T
+	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async listAllNews(
-		paginationOptions?: PaginationOptions,
-	): Promise<QueryResult<MessariAllAssetsNews>> {
-		const response = await this.request.get<MessariAllAssetsNewsAPIResponse>(
+	public async listAllNews<
+		T extends Array<Record<string, any>> = MessariAssetNews[],
+	>(paginationOptions?: PaginationOptions): Promise<QueryResult<T>> {
+		const response = await this.request.get<QueryResult<T>>(
 			buildAPIEndpoint('v1/news', paginationOptions),
 		);
 
@@ -170,13 +170,14 @@ export class MessariClient {
 	/**
 	 * Get the latest news and analysis for an asset
 	 *
+	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @returns {Promise<QueryResult<MessariAssetNews[]>>}
+	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async listAssetNews(
-		assetKey: string,
-	): Promise<QueryResult<MessariAssetNews[]>> {
-		const response = await this.request.get<MessariAssetNewsAPIResponse>(
+	public async listAssetNews<
+		T extends Array<Record<string, any>> = MessariAssetNews[],
+	>(assetKey: string): Promise<QueryResult<T>> {
+		const response = await this.request.get<QueryResult<T>>(
 			buildAPIEndpoint(`v1/news/${assetKey}`),
 		);
 

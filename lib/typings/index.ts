@@ -24,8 +24,6 @@ export type MessariAssetWithMetrics = {
 	};
 };
 
-export type MessariAssetAPIResponse = QueryResult<MessariAsset>;
-
 // ---
 
 export type MessariAssetMetricsAllTimeHigh = {
@@ -57,44 +55,26 @@ export type MessariAssetMetrics = {
 	roi_data: MessariAssetMetricsROIData;
 };
 
-export type MessariAssetMetricsAPIResponse = QueryResult<MessariAssetMetrics>;
-
 // ---
 
 export type MessariAssetMarketData = {
-	price_usd: number;
-	price_btc: number;
-	price_eth: number;
-	volume_last_24_hours: number;
-	real_volume_last_24_hours: number;
-	percent_change_usd_last_1_hour?: number | null;
-	percent_change_btc_last_1_hour?: number | null;
-	percent_change_eth_last_1_hour?: number | null;
-	percent_change_usd_last_24_hours?: number | null;
-	percent_change_btc_last_24_hours?: number | null;
-	percent_change_eth_last_24_hours?: number | null;
-	ohlcv_last_1_hour?: MessariAssetMarketOHLCV | null;
-	ohlcv_last_24_hour?: MessariAssetMarketOHLCV | null;
-	last_trade_at?: string | null;
+	market_data: {
+		price_usd: number;
+		price_btc: number;
+		price_eth: number;
+		volume_last_24_hours: number;
+		real_volume_last_24_hours: number;
+		percent_change_usd_last_1_hour?: number | null;
+		percent_change_btc_last_1_hour?: number | null;
+		percent_change_eth_last_1_hour?: number | null;
+		percent_change_usd_last_24_hours?: number | null;
+		percent_change_btc_last_24_hours?: number | null;
+		percent_change_eth_last_24_hours?: number | null;
+		ohlcv_last_1_hour?: MessariAssetMarketOHLCV | null;
+		ohlcv_last_24_hour?: MessariAssetMarketOHLCV | null;
+		last_trade_at?: string | null;
+	};
 };
-
-export type MessariAssetMarketDataAPIResponse = QueryResult<{
-	market_data: MessariAssetMarketData;
-}>;
-
-// ---
-
-export type MessariAllAssets = MessariAssetWithMetrics[];
-
-export type MessariAllAssetsAPIResponse = QueryResult<
-	MessariAssetWithMetrics[]
->;
-
-// ---
-
-export type MessariAllAssetsNews = MessariAssetNews[];
-
-export type MessariAllAssetsNewsAPIResponse = QueryResult<MessariAllAssetsNews>;
 
 // ---
 
@@ -104,20 +84,18 @@ export type MessariAssetNews = {
 	content: string;
 	references: Array<{
 		name: string;
-		url: string;
+		url: string | null;
 	}>;
 	previewImage: string;
-	pdfUrl: string;
+	pdfUrl: string | null;
 	published_at: string;
 	author: {
 		name: string;
-		url: string;
+		url: string | null;
 	};
 	tags: string[];
 	url: string;
 };
-
-export type MessariAssetNewsAPIResponse = QueryResult<MessariAssetNews[]>;
 
 // ---
 

@@ -1,16 +1,14 @@
 export type {
-	MessariAllAssetsNews,
-	MessariAllAssets,
+	MessariAsset,
 	MessariAssetMarketCap,
 	MessariAssetMarketData,
 	MessariAssetMarketOHLCV,
+	MessariAssetMetrics,
 	MessariAssetMetricsAllTimeHigh,
 	MessariAssetMetricsROIData,
-	MessariAssetMetrics,
 	MessariAssetNews,
 	MessariAssetReddit,
 	MessariAssetWithMetrics,
-	MessariAsset,
 	QueryResult,
 } from './typings';
 export * from './client';

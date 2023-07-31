@@ -32,9 +32,7 @@ describe('MessariClient', (): void => {
 
       expect(marketData.status.error_code).toBeUndefined();
       expect(marketData.data).toBeDefined();
-      expect(marketData.data!.volume_last_24_hours).toBeDefined();
-      expect(marketData.data!.ohlcv_last_1_hour).toBeDefined();
-      expect(marketData.data!.ohlcv_last_24_hour).toBeDefined();
+      expect(marketData.data!.market_data).toBeDefined();
     });
   });
 
