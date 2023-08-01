@@ -5,7 +5,7 @@
     "email": "matheustrres.rj@gmail.com"
   },
   "description": "A lightweight, unofficial, easy-to-use, dependency-free, Node.js client to fetch cryptocurrency data from Messari API.",
-  "version": "1.0.3",
+  "version": "1.0.3-patch",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "directories": {
