@@ -127,7 +127,7 @@ describe('MessariClient', (): void => {
   });
 
   describe('.listAssetNews', (): void => {
-    it.only('should get the paginated list of latest news and analysis for an asset', async (): Promise<void> => {
+    it('should get the paginated list of latest news and analysis for an asset', async (): Promise<void> => {
       const { status, data } = await client.listAssetNews('ethereum', {
         limit: 4,
       });
