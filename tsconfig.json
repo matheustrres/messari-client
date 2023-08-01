@@ -1,12 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2021",
     "moduleResolution": "node",
     "module": "commonjs",
-    "lib": [
-      "es6"
-    ],
-    "sourceMap": true,
     "allowJs": true,
     "declaration": true,
     "outDir": "./dist",
@@ -24,11 +20,4 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": [
-    "lib/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ]
 }
