@@ -5,6 +5,7 @@ import {
 	MessariAssetWithMetrics,
 	MessariAsset,
 	QueryResult,
+	MessariAssetMarketDataAPIResponse,
 } from './typings';
 import { MessariError } from './utils/errors/messari.error';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
@@ -99,12 +100,12 @@ export class MessariClient {
 	 * @param {string} assetKey - The asset's ID, slug or symbol
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async getAssetMarketData<T = MessariAssetMarketData>(
+	public async getAssetMarketData(
 		assetKey: string,
-	): Promise<QueryResult<T>> {
-		const response = await this.request.get<QueryResult<T>>(
-			buildAPIEndpoint(`v1/assets/${assetKey}/metrics/market-data`),
-		);
+	): Promise<QueryResult<MessariAssetMarketData>> {
+		const response = await this.request.get<
+			QueryResult<MessariAssetMarketDataAPIResponse>
+		>(buildAPIEndpoint(`v1/assets/${assetKey}/metrics/market-data`));
 
 		if (response instanceof MessariError) {
 			return this.sendErrorResponse(response);
@@ -114,7 +115,7 @@ export class MessariClient {
 			status: {
 				timestamp: new Date().toISOString(),
 			},
-			data: response.data,
+			data: response.data.market_data,
 		};
 	}
 

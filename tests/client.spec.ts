@@ -52,34 +52,17 @@ describe('MessariClient', (): void => {
 
   describe('.getAssetMarketData', (): void => {
     it('should get the latest market-data for an asset.', async (): Promise<void> => {
-      type MyAssetMarketData = MessariAssetMarketData & {
-        Asset: {
-          id: string;
-          name: string;
-          symbol: string;
-          slug: string;
-          serial_id: number;
-        };
-      };
-
-      const { status, data } = await client.getAssetMarketData<MyAssetMarketData>('ethereum');
+      const { status, data } = await client.getAssetMarketData('ethereum');
 
       expect(status.error_code).toBe(undefined);
       expect(status.error_message).toBe(undefined);
 
-      expect(data!.Asset).toBeDefined();
-      expect(data!.Asset.id).toBeDefined();
-      expect(data!.Asset.serial_id).toBe(6059);
-      expect(data!.Asset.symbol).toBe('ETH');
-      expect(data!.Asset.name).toBe('Ethereum');
-      expect(data!.Asset.slug).toBe('ethereum');
-
-      expect(data!.market_data).toBeDefined();
-      expect(data!.market_data.price_usd).toBeDefined();
-      expect(data!.market_data.price_eth).toBeDefined();
-      expect(data!.market_data.price_btc).toBeDefined();
-      expect(data!.market_data.ohlcv_last_1_hour).toBeDefined();
-      expect(data!.market_data.ohlcv_last_24_hour).toBeDefined();
+      expect(data).toBeDefined();
+      expect(data!.price_usd).toBeDefined();
+      expect(data!.price_eth).toBeDefined();
+      expect(data!.price_btc).toBeDefined();
+      expect(data!.ohlcv_last_1_hour).toBeDefined();
+      expect(data!.ohlcv_last_24_hour).toBeDefined();
     });
   });
 

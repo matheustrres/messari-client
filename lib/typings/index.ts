@@ -8,20 +8,18 @@ export type MessariAsset = {
 
 export type MessariAssetWithMetrics = {
 	id: string;
-	serial_id?: number;
+	serial_id: number;
 	symbol: string;
 	name: string;
 	slug: string;
 	metrics: {
-		id: string;
-		serial_id?: number;
-		symbol: string;
-		name: string;
-		slug: string;
+		all_time_high: MessariAssetMetricsAllTimeHigh;
 		market_data: MessariAssetMarketData;
 		marketcap: MessariAssetMarketCap;
 		reddit?: MessariAssetReddit;
+		roi_data: MessariAssetMetricsROIData;
 	};
+	// profile: {}
 };
 
 // ---
@@ -44,36 +42,39 @@ export type MessariAssetMetricsROIData = {
 
 export type MessariAssetMetrics = {
 	id: string;
-	serial_id?: number;
+	serial_id: number;
 	symbol: string;
 	name: string;
 	slug: string;
 	all_time_high: MessariAssetMetricsAllTimeHigh;
 	market_data: MessariAssetMarketData;
 	marketcap: MessariAssetMarketCap;
-	reddit: MessariAssetReddit;
+	reddit?: MessariAssetReddit;
 	roi_data: MessariAssetMetricsROIData;
 };
 
 // ---
 
 export type MessariAssetMarketData = {
-	market_data: {
-		price_usd: number;
-		price_btc: number;
-		price_eth: number;
-		volume_last_24_hours: number;
-		real_volume_last_24_hours: number;
-		percent_change_usd_last_1_hour?: number | null;
-		percent_change_btc_last_1_hour?: number | null;
-		percent_change_eth_last_1_hour?: number | null;
-		percent_change_usd_last_24_hours?: number | null;
-		percent_change_btc_last_24_hours?: number | null;
-		percent_change_eth_last_24_hours?: number | null;
-		ohlcv_last_1_hour?: MessariAssetMarketOHLCV | null;
-		ohlcv_last_24_hour?: MessariAssetMarketOHLCV | null;
-		last_trade_at?: string | null;
-	};
+	price_usd: number;
+	price_btc: number;
+	price_eth: number;
+	volume_last_24_hours: number;
+	real_volume_last_24_hours: number;
+	percent_change_usd_last_1_hour: number | null;
+	percent_change_btc_last_1_hour: number | null;
+	percent_change_eth_last_1_hour: number | null;
+	percent_change_usd_last_24_hours: number | null;
+	percent_change_btc_last_24_hours: number | null;
+	percent_change_eth_last_24_hours: number | null;
+	ohlcv_last_1_hour?: MessariAssetMarketOHLCV | null;
+	ohlcv_last_24_hour?: MessariAssetMarketOHLCV | null;
+	last_trade_at?: string | null;
+};
+
+export type MessariAssetMarketDataAPIResponse = {
+	// Asset: MessariAsset;
+	market_data: MessariAssetMarketData;
 };
 
 // ---
