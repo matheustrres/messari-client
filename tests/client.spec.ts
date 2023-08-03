@@ -1,5 +1,4 @@
 import { MessariClient } from '../lib/client';
-import { MessariAssetMarketData } from '../lib/typings';
 
 describe('MessariClient', (): void => {
   let client: MessariClient;
