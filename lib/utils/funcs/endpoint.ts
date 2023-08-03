@@ -1,34 +1,24 @@
+import { generateQParams } from './paginate';
+
 export type PaginationOptions = {
 	page?: number;
 	limit?: number;
+	sort?: 'id'; // | 'marketcap desc'
 };
-
-const formatLimit = (limit: number): number => {
-	const DEFAULT_LIMIT = 20;
-	const MAX_LIMIT = 500;
-
-	if (limit < 0) limit = DEFAULT_LIMIT;
-	if (limit > MAX_LIMIT) limit = MAX_LIMIT;
-
-	return limit;
-};
-
-const formatPageNumber = (pageNumber: number): number =>
-	pageNumber < 0 ? 1 : pageNumber;
 
 export const buildAPIEndpoint = (
 	endpoint: string,
-	pgtOptions?: PaginationOptions | never,
+	paginationOptions?: PaginationOptions | never,
 ): string => {
-	const qParams: string[] = [];
+	if (paginationOptions) {
+		const qParams: string = generateQParams<PaginationOptions>({
+			page: 1,
+			limit: 20,
+			sort: 'id',
+			...paginationOptions,
+		});
 
-	if (pgtOptions?.page)
-		qParams.push(`page=${formatPageNumber(pgtOptions?.page)}`);
-	if (pgtOptions?.limit)
-		qParams.push(`limit=${formatLimit(pgtOptions?.limit)}`);
-
-	if (qParams.length) {
-		endpoint += `?${qParams.join('&')}`;
+		return `${endpoint}?${qParams}`;
 	}
 
 	return endpoint;
