@@ -1,6 +1,4 @@
-import { getRequestErrorMessage } from '../constraints/errors';
 import { QueryResult } from '../typings';
-import { MessariError } from './errors/messari.error';
 
 type RequestConfigProps = {
 	messariApiKey: string;
@@ -9,9 +7,7 @@ type RequestConfigProps = {
 export class Request {
 	constructor(private config: RequestConfigProps) {}
 
-	public async get<T extends QueryResult>(
-		endpoint: string,
-	): Promise<T | MessariError> {
+	public async get<T>(endpoint: string): Promise<QueryResult<T>> {
 		const res = await fetch(
 			new URL(`https://data.messari.io/api/${endpoint}`),
 			{
@@ -22,20 +18,8 @@ export class Request {
 			},
 		);
 
-		const resObj = (await res.json()) as T;
+		const json = (await res.json()) as QueryResult<T>;
 
-		if (resObj.status.error_code) {
-			const errorMessage: string = getRequestErrorMessage(
-				resObj.status.error_code,
-			);
-
-			return new MessariError(
-				errorMessage,
-				resObj.status.error_code,
-				resObj.status.timestamp,
-			);
-		}
-
-		return resObj;
+		return json;
 	}
 }
