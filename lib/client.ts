@@ -7,7 +7,6 @@ import {
 	QueryResult,
 	MessariAssetMarketDataAPIResponse,
 } from './typings';
-import { MessariError } from './utils/errors/messari.error';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
 import { Request } from './utils/request';
 
@@ -50,20 +49,15 @@ export class MessariClient {
 	public async getAsset<T = MessariAsset>(
 		assetKey: string,
 	): Promise<QueryResult<T>> {
-		const response = await this.request.get<QueryResult<T>>(
+		const response = await this.request.get<T>(
 			buildAPIEndpoint(`v1/assets/${assetKey}`),
 		);
 
-		if (response instanceof MessariError) {
-			return this.sendErrorResponse(response);
+		if (response.status.error_code && response.status.error_message) {
+			return this.sendError(response);
 		}
 
-		return {
-			status: {
-				timestamp: new Date().toISOString(),
-			},
-			data: response.data,
-		};
+		return response;
 	}
 
 	/**
@@ -76,44 +70,38 @@ export class MessariClient {
 	public async getAssetMetrics<T = MessariAssetMetrics>(
 		assetKey: string,
 	): Promise<QueryResult<T>> {
-		const response = await this.request.get<QueryResult<T>>(
+		const response = await this.request.get<T>(
 			buildAPIEndpoint(`v1/assets/${assetKey}/metrics`),
 		);
 
-		if (response instanceof MessariError) {
-			return this.sendErrorResponse(response);
+		if (response.status.error_code && response.status.error_message) {
+			return this.sendError(response);
 		}
 
-		return {
-			status: {
-				timestamp: new Date().toISOString(),
-			},
-			data: response.data,
-		};
+		return response;
 	}
 
 	/**
 	 * Get the latest market-data for an asset. This data is also included in the
 	 * `client.getAssetMetrics` method, but if all you need is market-data, use this.
 	 *
-	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async getAssetMarketData(
 		assetKey: string,
 	): Promise<QueryResult<MessariAssetMarketData>> {
-		const response = await this.request.get<
-			QueryResult<MessariAssetMarketDataAPIResponse>
-		>(buildAPIEndpoint(`v1/assets/${assetKey}/metrics/market-data`));
+		const response = await this.request.get<MessariAssetMarketDataAPIResponse>(
+			buildAPIEndpoint(`v1/assets/${assetKey}/metrics/market-data`),
+		);
 
-		if (response instanceof MessariError) {
-			return this.sendErrorResponse(response);
+		if (response.status.error_code && response.status.error_message) {
+			return this.sendError(response);
 		}
 
 		return {
 			status: {
-				timestamp: new Date().toISOString(),
+				timestamp: response.status.timestamp,
 			},
 			data: response.data.market_data,
 		};
@@ -131,20 +119,15 @@ export class MessariClient {
 	public async listAllAssets<
 		T extends Array<Record<string, any>> = MessariAssetWithMetrics[],
 	>(paginationOptions?: PaginationOptions): Promise<QueryResult<T>> {
-		const response = await this.request.get<QueryResult<T>>(
+		const response = await this.request.get<T>(
 			buildAPIEndpoint('v2/assets', paginationOptions),
 		);
 
-		if (response instanceof MessariError) {
-			return this.sendErrorResponse(response);
+		if (response.status.error_code && response.status.error_message) {
+			return this.sendError(response);
 		}
 
-		return {
-			status: {
-				timestamp: new Date().toISOString(),
-			},
-			data: response.data,
-		};
+		return response;
 	}
 
 	/**
@@ -159,20 +142,15 @@ export class MessariClient {
 	public async listAllAssetsNews<
 		T extends Array<Record<string, any>> = MessariAssetNews[],
 	>(paginationOptions?: PaginationOptions): Promise<QueryResult<T>> {
-		const response = await this.request.get<QueryResult<T>>(
+		const response = await this.request.get<T>(
 			buildAPIEndpoint('v1/news', paginationOptions),
 		);
 
-		if (response instanceof MessariError) {
-			return this.sendErrorResponse(response);
+		if (response.status.error_code && response.status.error_message) {
+			return this.sendError(response);
 		}
 
-		return {
-			status: {
-				timestamp: new Date().toISOString(),
-			},
-			data: response.data,
-		};
+		return response;
 	}
 
 	/**
@@ -191,28 +169,23 @@ export class MessariClient {
 		assetKey: string,
 		paginationOptions?: PaginationOptions,
 	): Promise<QueryResult<T>> {
-		const response = await this.request.get<QueryResult<T>>(
+		const response = await this.request.get<T>(
 			buildAPIEndpoint(`v1/news/${assetKey}`, paginationOptions),
 		);
 
-		if (response instanceof MessariError) {
-			return this.sendErrorResponse(response);
+		if (response.status.error_code && response.status.error_message) {
+			return this.sendError(response);
 		}
 
-		return {
-			status: {
-				timestamp: new Date().toISOString(),
-			},
-			data: response.data,
-		};
+		return response;
 	}
 
-	private sendErrorResponse(error: MessariError): QueryResult {
+	private sendError(queryResult: QueryResult): QueryResult {
 		return {
 			status: {
-				timestamp: error.timestamp,
-				error_code: error.code,
-				error_message: error.message,
+				timestamp: queryResult.status.timestamp,
+				error_code: queryResult.status.error_code,
+				error_message: queryResult.status.error_message,
 			},
 		};
 	}
