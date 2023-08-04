@@ -65,6 +65,17 @@ describe('MessariClient', (): void => {
     });
   });
 
+  describe('.getAllMarkets', (): void => {
+    it('should get all markets', async (): Promise<void> => {
+      const { status, data } = await client.getAllMarkets();
+
+      expect(status.error_code).toBe(undefined);
+      expect(status.error_message).toBe(undefined);
+
+      expect(data.length).toBeTruthy();
+    });
+  });
+
   describe('.listAllAssets', (): void => {
     it('should get the paginated list of all assets and their metrics', async (): Promise<void> => {
       const { status, data } = await client.listAllAssets({
