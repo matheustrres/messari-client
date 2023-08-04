@@ -9,6 +9,7 @@ export type {
 	MessariAssetNews,
 	MessariAssetReddit,
 	MessariAssetWithMetrics,
+	MessariMarket,
 	QueryResult,
 } from './typings';
 export * from './client';

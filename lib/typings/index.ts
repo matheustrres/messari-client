@@ -78,6 +78,29 @@ export type MessariAssetMarketDataAPIResponse = {
 };
 
 // ---
+export type MessariMarket = {
+	id: string;
+	exchange_id: string;
+	base_asset_id: string;
+	quote_asset_id: string;
+	trade_start: string | null;
+	trade_end: string | null;
+	version: number;
+	excluded_from_price: boolean;
+	exchange_name: string;
+	exchange_slug: string;
+	base_asset_symbol: string;
+	quote_asset_symbol: string;
+	pair: string;
+	price_usd: number | null;
+	vwap_weight: number;
+	volume_last_24_hours: number | null;
+	has_real_volume: boolean;
+	deviation_from_vwap_percent: number | null;
+	last_trade_at: string | null;
+};
+
+// ---
 
 export type MessariAssetNews = {
 	id: string;

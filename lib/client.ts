@@ -6,6 +6,7 @@ import {
 	MessariAsset,
 	QueryResult,
 	MessariAssetMarketDataAPIResponse,
+	MessariMarket,
 } from './typings';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
 import { Request } from './utils/request';
@@ -105,6 +106,21 @@ export class MessariClient {
 			},
 			data: response.data.market_data,
 		};
+	}
+
+	/**
+	 * Get the list of all exchanges and pairs that are supported by Messari's market data API
+	 *
+	 * @returns {Promise<QueryResult<MessariMarket[]>>}
+	 */
+	public async getAllMarkets(): Promise<QueryResult<MessariMarket[]>> {
+		const response = await this.request.get<MessariMarket[]>('v1/markets');
+
+		if (response.status.error_code && response.status.error_message) {
+			return this.sendError(response);
+		}
+
+		return response;
 	}
 
 	/**
