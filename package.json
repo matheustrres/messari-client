@@ -22,7 +22,7 @@
   "scripts": {
     "build": "tsc --build ./tsconfig.build.json",
     "bundle": "npm run build && npm pack",
-    "test": "dotenv -e .env -- jest",
+    "test": "dotenv -e .env -- jest --runInBand",
     "format": "prettier --write ./lib",
     "lint": "eslint ./lib --fix"
   },

@@ -7,6 +7,7 @@ const config: jest.Config = {
   transform: {
     '^.+\\.(t|j)s$': '@swc/jest',
   },
+  cache: false,
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
