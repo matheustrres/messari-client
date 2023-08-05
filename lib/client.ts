@@ -31,6 +31,7 @@ export class MessariClient {
 	 * Creates a new MessariClient instance
 	 *
 	 * @param {String} props.messariApiKey - A valid Messari api key
+   * @see {@link https://messari.io/api/docs} to find out how to get a valid api key
 	 */
 	constructor(props: MessariClientProps) {
 		MessariClient.validate(props.key);
