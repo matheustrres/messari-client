@@ -148,6 +148,11 @@ export type MessariAssetReddit = {
 
 // ---
 
+/**
+ * Base result of all requests made to the Messari api
+ * 
+ * @template T - Typing for an endpoint response
+ */
 export type QueryResult<T = any> =
 	| {
 			/* Request failed */

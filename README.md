@@ -2,7 +2,7 @@
 
 A Node.js client for fetching cryptocurrency data from **[Messari API](https://messari.io/dashboard)**, which provides crypto research, data and tools.
 
-## Autores
+## Author
 
 - **[Matheus Torres](https://www.github.com/matheustrres)**
 
