@@ -1,4 +1,5 @@
 import { MessariClient } from '../lib/client';
+import { QueryResult } from '../lib/typings';
 
 describe('MessariClient', (): void => {
   let client: MessariClient;
@@ -142,7 +143,18 @@ describe('MessariClient', (): void => {
   });
 
   it('should fail when searching for an invalid asset', async (): Promise<void> => {
-    await expect(client.getAsset('fake-asset').then(res => res.status.error_code)).resolves.toBeDefined();
-    await expect(client.getAssetMetrics('fake-asset').then(res => res.status.error_code)).resolves.toBeDefined();
+    const promises = [
+      client.getAsset('fake-asset-name'),
+      client.getAssetMetrics('fake-asset-name'),
+      client.getAssetMarketData('fake-asset-name'),
+      client.listAssetNews('fake-asset-name'),
+    ];
+
+    const results: QueryResult[] = await Promise.all(promises);
+
+    for (const result of results) {
+      expect(result.status.error_code).toBe(404);
+      expect(result.status.error_message).toBe('Not Found');
+    }
   });
 });
