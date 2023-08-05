@@ -1,43 +1,56 @@
-
 # Messari Client
 
-A Node.js client for interacting with the **[Messari API](http://messari.io)**, which provides crypto research, data and tools.
+A Node.js client for fetching cryptocurrency data from **[Messari API](https://messari.io/dashboard)**, which provides crypto research, data and tools.
+
+## Autores
+
+- **[Matheus Torres](https://www.github.com/matheustrres)**
+
+## Features
+
+- Search for basic metadata of an asset
+- Search for all quantitative metrics of an asset
+- Search for the latest market-data for an asset
+- List of all exchanges and pairs supported
+- List of all assets and their metrics
+- List of the latest news and analysis for an asset
+- List of the latest news and analysis for all assets
 
 ## Installation
 
-You can install the latest version of the client using:
+Install the npm package
 
 ```bash
-$ npm install @matheustrres/messari-client
-$ yarn add @matheustrres/messari-client
+npm install @matheustrres/messari-client --save
 ```
     
-## Getting Started
+## Quick Start
 
-```javascript
-import { MessariClient } from '@matheustrres/messari-client';
+- Initialize the client by providing a valid api key
 
-(async () => {
-  const client = new MessariClient({
-    key: 'valid-messari-api-key',
-  });
-  const { data, status } = await client.getAsset('ethereum');
+```typescript
+import { MessariClient } from '@matheustrres/messari-client'
 
-  if (status.error_message) {
-    // An error has been found
-    // asset.data will be undefined
-  }
+export const messariClient = new MessariClient({
+  key: 'valid-messari-api-key',
+});
 
-  const ethId = data.id;
-  const ethName = data.name;
-  const ethSymbol = data.symbol;
-
-  // ... 
-})();
 ```
 
+All client methods will return an object containing `status` and `data`. To ensure any mistakes, check the value of the `status.error_code` or `status.error_message` properties before making use of `data` properties, if they are filled this indicates that there was an error in the request and `data` will be undefined.
 
+#### - Search for basic metadata of an asset
+
+```typescript
+const { status, data } = await messariClient.getAsset('bitcoin');
+
+if (status.error_code || status.error_message) {
+  // An error has been found while searching, 
+  // data will be undefined
+}
+
+console.log(data);
+```
 ## License
 
-This project is **[MIT licensed](https://github.com/matheustrres/messari-client/blob/main/LICENSE)**.
-
+This project is **[MIT](https://github.com/matheustrres/messari-client/blob/main/LICENSE)** licensed.
