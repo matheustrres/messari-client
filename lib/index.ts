@@ -7,6 +7,7 @@ export type {
 	MessariAssetMetricsAllTimeHigh,
 	MessariAssetMetricsROIData,
 	MessariAssetNews,
+	MessariAssetMarketDataWithAsset,
 	MessariAssetReddit,
 	MessariAssetWithMetrics,
 	MessariMarket,

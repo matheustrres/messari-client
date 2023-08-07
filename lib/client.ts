@@ -5,8 +5,8 @@ import {
 	MessariAssetWithMetrics,
 	MessariAsset,
 	QueryResult,
-	MessariAssetMarketDataAPIResponse,
 	MessariMarket,
+	MessariAssetMarketDataWithAsset,
 } from './typings';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
 import { Request } from './utils/request';
@@ -31,7 +31,7 @@ export class MessariClient {
 	 * Creates a new MessariClient instance
 	 *
 	 * @param {String} props.messariApiKey - A valid Messari api key
-   * @see {@link https://messari.io/api/docs} to find out how to get a valid api key
+	 * @see {@link https://messari.io/api/docs} to find out how to get a valid api key
 	 */
 	constructor(props: MessariClientProps) {
 		MessariClient.validate(props.key);
@@ -87,13 +87,14 @@ export class MessariClient {
 	 * Get the latest market-data for an asset. This data is also included in the
 	 * `client.getAssetMetrics` method, but if all you need is market-data, use this.
 	 *
+	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async getAssetMarketData(
+	public async getAssetMarketData<T = MessariAssetMarketData>(
 		assetKey: string,
-	): Promise<QueryResult<MessariAssetMarketData>> {
-		const response = await this.request.get<MessariAssetMarketDataAPIResponse>(
+	): Promise<QueryResult<MessariAssetMarketDataWithAsset<T>>> {
+		const response = await this.request.get<MessariAssetMarketDataWithAsset<T>>(
 			buildAPIEndpoint(`v1/assets/${assetKey}/metrics/market-data`),
 		);
 
@@ -101,12 +102,7 @@ export class MessariClient {
 			return this.sendError(response);
 		}
 
-		return {
-			status: {
-				timestamp: response.status.timestamp,
-			},
-			data: response.data.market_data,
-		};
+		return response;
 	}
 
 	/**

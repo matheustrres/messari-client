@@ -1,6 +1,6 @@
 export type MessariAsset = {
 	id: string;
-	serial_id?: number;
+	serial_id: number;
 	symbol: string;
 	name: string;
 	slug: string;
@@ -72,9 +72,9 @@ export type MessariAssetMarketData = {
 	last_trade_at?: string | null;
 };
 
-export type MessariAssetMarketDataAPIResponse = {
-	// Asset: MessariAsset;
-	market_data: MessariAssetMarketData;
+export type MessariAssetMarketDataWithAsset<T> = {
+	Asset: MessariAsset;
+	market_data: T;
 };
 
 // ---
@@ -150,7 +150,7 @@ export type MessariAssetReddit = {
 
 /**
  * Base result of all requests made to the Messari api
- * 
+ *
  * @template T - Typing for an endpoint response
  */
 export type QueryResult<T = any> =
