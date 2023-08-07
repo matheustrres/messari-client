@@ -193,8 +193,8 @@ export class MessariClient {
 		return {
 			status: {
 				timestamp: queryResult.status.timestamp,
-				error_code: queryResult.status.error_code,
-				error_message: queryResult.status.error_message,
+				error_code: queryResult.status.error_code!,
+				error_message: queryResult.status.error_message!,
 			},
 		};
 	}

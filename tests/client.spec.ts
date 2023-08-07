@@ -77,7 +77,7 @@ describe('MessariClient', (): void => {
       expect(status.error_code).toBe(undefined);
       expect(status.error_message).toBe(undefined);
 
-      expect(data.length).toBeTruthy();
+      expect(data!.length).toBeTruthy();
     });
   });
 
