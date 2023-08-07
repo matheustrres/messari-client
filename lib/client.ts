@@ -44,14 +44,11 @@ export class MessariClient {
 	/**
 	 * Get basic metadata for an asset.
 	 *
-	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @returns {Promise<QueryResult<T>>}
+	 * @returns {Promise<QueryResult<MessariAsset>>}
 	 */
-	public async getAsset<T = MessariAsset>(
-		assetKey: string,
-	): Promise<QueryResult<T>> {
-		const response = await this.request.get<T>(
+	public async getAsset(assetKey: string): Promise<QueryResult<MessariAsset>> {
+		const response = await this.request.get<MessariAsset>(
 			buildAPIEndpoint(`v1/assets/${assetKey}`),
 		);
 
@@ -61,7 +58,6 @@ export class MessariClient {
 
 		return response;
 	}
-
 	/**
 	 * Get all the quantitative metrics for an asset.
 	 *
