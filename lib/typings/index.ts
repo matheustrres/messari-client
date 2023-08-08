@@ -157,6 +157,10 @@ export type QueryResult<T = any> =
 	| {
 			/* Request failed */
 			status: {
+				/**
+				 * Number of milliseconds taken to generate this response
+				 */
+				elapsed: number;
 				error_code: number;
 				error_message: string;
 				timestamp: string;
@@ -166,6 +170,10 @@ export type QueryResult<T = any> =
 	| {
 			/* Request succeeded */
 			status: {
+				/**
+				 * Number of milliseconds taken to generate this response
+				 */
+				elapsed: number;
 				error_code?: never;
 				error_message?: never;
 				timestamp: string;
