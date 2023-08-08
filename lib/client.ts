@@ -9,17 +9,13 @@ import {
 	MessariAssetMarketDataWithAsset,
 } from './typings';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
-import { Request } from './utils/request';
-
-type MessariClientProps = {
-	key: string;
-};
+import { IRequest, Request } from './utils/request';
 
 /**
  * Represents the main MessariClient
  */
 export class MessariClient {
-	private request: Request;
+	private readonly request: IRequest;
 
 	static validate(apiKey: string): void {
 		if (!apiKey) {
@@ -30,15 +26,14 @@ export class MessariClient {
 	/**
 	 * Creates a new MessariClient instance
 	 *
-	 * @param {String} props.messariApiKey - A valid Messari api key
-	 * @see {@link https://messari.io/api/docs} to find out how to get a valid api key
+	 * @param {String} messariApiKey - A valid Messari api key
+	 * @param {IRequest} [request] - A request class that implements IRequest
+	 * @see {@link https://messari.io/api/docs} to find out how to get a valid messari api key
 	 */
-	constructor(props: MessariClientProps) {
-		MessariClient.validate(props.key);
+	constructor(messariApiKey: string, request?: IRequest) {
+		MessariClient.validate(messariApiKey);
 
-		this.request = new Request({
-			messariApiKey: props.key,
-		});
+		this.request = request || new Request(messariApiKey);
 	}
 
 	/**
@@ -192,6 +187,7 @@ export class MessariClient {
 	private sendError(queryResult: QueryResult): QueryResult {
 		return {
 			status: {
+				elapsed: queryResult.status.elapsed,
 				timestamp: queryResult.status.timestamp,
 				error_code: queryResult.status.error_code!,
 				error_message: queryResult.status.error_message!,
