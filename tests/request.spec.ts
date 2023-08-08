@@ -15,6 +15,16 @@ type MessariAssetSuccessfulResponse = {
 	};
 };
 
+type MessariAssetErrorResponse = {
+	status: {
+		elapsed: number;
+		timestamp: string;
+		error_code: number;
+		error_message: string;
+	};
+	data?: never;
+};
+
 const mockFetchResponse = <T>(response: T): jest.Mock =>
 	jest.fn().mockImplementation(async () => {
 		return {
@@ -58,6 +68,28 @@ describe('Request HTTP/client', (): void => {
 			const response = await request.get<MessariAsset>('v1/assets/bitcoin');
 
 			expect(response).toEqual(messariApiGetAssetResponse);
+		});
+
+		it('should return an error response when providing an invalid parameter', async (): Promise<void> => {
+			const errorMessage = 'invalid param value for field id';
+
+			global.fetch = mockFetchResponse<MessariAssetErrorResponse>({
+				status: {
+					elapsed: 10,
+					error_code: 400,
+					error_message: errorMessage,
+					timestamp: new Date().toISOString(),
+				},
+			});
+
+			const { status, data } = await request.get<MessariAsset>(
+				'v1/assets/fake_asset_key',
+			);
+
+			expect(status.error_code).toBe(400);
+			expect(status.error_message).toBe(errorMessage);
+
+			expect(data).toBe(undefined);
 		});
 	});
 });
