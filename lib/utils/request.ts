@@ -1,11 +1,17 @@
 import { QueryResult } from '../typings';
 
-type RequestConfigProps = {
-	messariApiKey: string;
-};
+/**
+ * Base interface for a request class to extend, in case you'd like
+ * to use a request class of your own on the client.
+ *
+ * @interface IRequest
+ */
+export interface IRequest {
+	get: <T>(endpoint: string) => Promise<QueryResult<T>>;
+}
 
-export class Request {
-	constructor(private config: RequestConfigProps) {}
+export class Request implements IRequest {
+	constructor(private readonly messariApiKey: string) {}
 
 	public async get<T>(endpoint: string): Promise<QueryResult<T>> {
 		const res = await fetch(
@@ -13,7 +19,7 @@ export class Request {
 			{
 				method: 'GET',
 				headers: {
-					'x-messari-api-key': this.config.messariApiKey,
+					'x-messari-api-key': this.messariApiKey,
 				},
 			},
 		);

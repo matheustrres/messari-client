@@ -1,0 +1,15 @@
+{
+  "status": {
+    "elapsed": 2,
+    "timestamp": "2023-08-07T21:52:55.434547008Z"
+  },
+  "data": {
+    "id": "1e31218a-e44e-4285-820c-8282ee222035",
+    "symbol": "BTC",
+    "serial_id": 6057,
+    "name": "Bitcoin",
+    "slug": "bitcoin",
+    "contract_addresses": null,
+    "_internal_temp_agora_id": "9793eae6-f374-46b4-8764-c2d224429791"
+  }
+}

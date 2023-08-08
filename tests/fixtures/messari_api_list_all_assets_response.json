@@ -1,0 +1,93 @@
+{
+  "status": {
+    "elapsed": 366,
+    "timestamp": "2023-08-08T13:00:18.083018155Z"
+  },
+  "data": [
+    {
+      "id": "00154cd9-98a9-41f1-a9ec-c6559b53dc53",
+      "serial_id": 12708,
+      "symbol": "ALH",
+      "name": "AlloHash",
+      "slug": "allohash",
+      "contract_addresses": [
+        null
+      ],
+      "_internal_temp_agora_id": "",
+      "metrics": [
+        null
+      ],
+      "profile": [
+        null
+      ]
+    },
+    {
+      "id": "0016aff8-c747-4a03-8e66-e17abaa3e346",
+      "serial_id": 7907,
+      "symbol": "ENTR",
+      "name": "EnterDAO",
+      "slug": "enterdao",
+      "contract_addresses": [
+        null
+      ],
+      "_internal_temp_agora_id": "",
+      "metrics": [
+        null
+      ],
+      "profile": [
+        null
+      ]
+    },
+    {
+      "id": "0017a365-73e7-4b96-bb12-d1e8b8b0c376",
+      "serial_id": 74431,
+      "symbol": "hatchy",
+      "name": "HatchyPocket",
+      "slug": "hatchypocket",
+      "contract_addresses": [
+        null
+      ],
+      "_internal_temp_agora_id": "",
+      "metrics": [
+        null
+      ],
+      "profile": [
+        null
+      ]
+    },
+    {
+      "id": "0018b9a5-f16d-440b-a617-a7c52ae2fc42",
+      "serial_id": 14919,
+      "symbol": "VOLT",
+      "name": "Voltage",
+      "slug": "voltage",
+      "contract_addresses": [
+        null
+      ],
+      "_internal_temp_agora_id": "",
+      "metrics": [
+        null
+      ],
+      "profile": [
+        null
+      ]
+    },
+    {
+      "id": "001adcf3-e807-41b4-a865-92bfce293a55",
+      "serial_id": 305808,
+      "symbol": "ron",
+      "name": "President Ron DeSantis",
+      "slug": "president-ron-desantis",
+      "contract_addresses": [
+        null
+      ],
+      "_internal_temp_agora_id": "",
+      "metrics": [
+        null
+      ],
+      "profile": [
+        null
+      ]
+    }
+  ]
+}
