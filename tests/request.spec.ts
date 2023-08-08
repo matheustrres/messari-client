@@ -4,6 +4,17 @@ import messariApiGetAssetResponse from './fixtures/messari_api_get_asset_respons
 
 const apiKey = process.env.MESSARI_API_KEY as string;
 
+type MessariAssetSuccessfulResponse = {
+	status: {
+		elapsed: number;
+		timestamp: string;
+	};
+	data: MessariAsset & {
+		contract_addresses: string[] | null;
+		_internal_temp_agora_id: string;
+	};
+};
+
 const mockFetchResponse = <T>(response: T): jest.Mock =>
 	jest.fn().mockImplementation(async () => {
 		return {
@@ -37,6 +48,16 @@ describe('Request HTTP/client', (): void => {
 					},
 				},
 			);
+		});
+
+		it('should return data on success', async (): Promise<void> => {
+			global.fetch = mockFetchResponse<MessariAssetSuccessfulResponse>(
+				messariApiGetAssetResponse,
+			);
+
+			const response = await request.get<MessariAsset>('v1/assets/bitcoin');
+
+			expect(response).toEqual(messariApiGetAssetResponse);
 		});
 	});
 });
