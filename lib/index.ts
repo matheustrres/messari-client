@@ -13,4 +13,5 @@ export type {
 	MessariMarket,
 	QueryResult,
 } from './typings';
+export { IRequest } from './utils/request';
 export * from './client';
