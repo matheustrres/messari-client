@@ -1,0 +1,38 @@
+{
+  "status": {
+    "elapsed": 1,
+    "timestamp": "2023-08-07T23:42:47.643340652Z"
+  },
+  "data": {
+    "Asset": {
+      "id": "21c795f5-1bfd-40c3-858e-e9d7e820c6d0",
+      "serial_id": 6059,
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "slug": "ethereum",
+      "contract_addresses": null,
+      "_internal_temp_agora_id": "263d8b01-5a96-41f0-85d5-09687bbbf7ca"
+    },
+    "market_data": {
+      "price_usd": 1824.685314212029,
+      "price_btc": 0.06261951017084676,
+      "price_eth": 1,
+      "volume_last_24_hours": 2491783812.4971867,
+      "real_volume_last_24_hours": 2299139244.4496803,
+      "volume_last_24_hours_overstatement_multiple": 1.0837898654953444,
+      "percent_change_usd_last_1_hour": -0.04413560383312355,
+      "percent_change_btc_last_1_hour": -0.025230993692430995,
+      "percent_change_eth_last_1_hour": 0,
+      "percent_change_usd_last_24_hours": -0.1541131399624138,
+      "percent_change_btc_last_24_hours": -0.48662925244227084,
+      "percent_change_eth_last_24_hours": 0,
+      "ohlcv_last_1_hour": [
+        null
+      ],
+      "ohlcv_last_24_hour": [
+        null
+      ],
+      "last_trade_at": "2023-08-07T23:38:00Z"
+    }
+  }
+}
