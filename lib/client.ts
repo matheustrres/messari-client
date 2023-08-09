@@ -28,6 +28,7 @@ export class MessariClient {
 	 *
 	 * @param {String} messariApiKey - A valid Messari api key
 	 * @param {IRequest} [request] - A request class that implements IRequest
+   * @see {@link https://curr.to/irequest-examples} to find out how to implement your own request class
 	 * @see {@link https://messari.io/api/docs} to find out how to get a valid messari api key
 	 */
 	constructor(messariApiKey: string, request?: IRequest) {

@@ -5,6 +5,7 @@ import { QueryResult } from '../typings';
  * to use a request class of your own on the client.
  *
  * @interface IRequest
+ * @see {@link https://curr.to/irequest-examples}
  */
 export interface IRequest {
 	get: <T>(endpoint: string) => Promise<QueryResult<T>>;
