@@ -9,7 +9,37 @@ import {
 	MessariAssetMarketDataWithAsset,
 } from './typings';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
+import { removeDuplicatesFromArray } from './utils/funcs/remove-duplicates-from-array';
 import { IRequest, Request } from './utils/request';
+
+/**
+ * All metrics available for search in the Messari api
+ */
+type AvailableMetrics =
+	| 'all_time_high'
+	| 'blockchain_stats_24_hours'
+	| 'cycle_low'
+	| 'developer_activity'
+	| 'exchange_flows'
+	| 'market_data_liquidity'
+	| 'market_data'
+	| 'marketcap'
+	| 'miner_flows'
+	| 'mining_stats'
+	| 'misc_data'
+	| 'on_chain_data'
+	| 'reddit'
+	| 'risk_metrics'
+	| 'roi_data'
+	| 'roi_by_year'
+	| 'supply_activity'
+	| 'supply_distribution'
+	| 'supply'
+	| 'token_sale_stats';
+
+type AssetOptions = {
+	metrics?: AvailableMetrics[];
+};
 
 /**
  * Represents the main MessariClient
@@ -28,7 +58,7 @@ export class MessariClient {
 	 *
 	 * @param {String} messariApiKey - A valid Messari api key
 	 * @param {IRequest} [request] - A request class that implements IRequest
-   * @see {@link https://curr.to/irequest-examples} to find out how to implement your own request class
+	 * @see {@link https://curr.to/irequest-examples} to find out how to implement your own request class
 	 * @see {@link https://messari.io/api/docs} to find out how to get a valid messari api key
 	 */
 	constructor(messariApiKey: string, request?: IRequest) {
@@ -41,12 +71,33 @@ export class MessariClient {
 	 * Get basic metadata for an asset.
 	 *
 	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @returns {Promise<QueryResult<MessariAsset>>}
+	 * @param {AssetOptions} [options] - The asset's options to be loaded in the request
+	 * @param {Array<String>} [options.metrics] - The asset's metrics to be loaded
+	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async getAsset(assetKey: string): Promise<QueryResult<MessariAsset>> {
-		const response = await this.request.get<MessariAsset>(
-			buildAPIEndpoint(`v1/assets/${assetKey}`),
-		);
+	public async getAsset<T = MessariAsset>(
+		assetKey: string,
+		options?: AssetOptions,
+	): Promise<QueryResult<T>> {
+		let endpoint: string;
+
+		if (options?.metrics?.length) {
+			const baseFields: string[] = [
+				'id',
+				'serial_id',
+				'name',
+				'slug',
+				'symbol',
+			];
+
+			endpoint = `v1/assets/${assetKey}/metrics?fields=${baseFields.join(
+				',',
+			)},${removeDuplicatesFromArray<AvailableMetrics[]>(options.metrics)}`;
+		} else {
+			endpoint = `v1/assets/${assetKey}`;
+		}
+
+		const response = await this.request.get<T>(endpoint);
 
 		if (response.status.error_code && response.status.error_message) {
 			return this.sendError(response);
@@ -54,6 +105,7 @@ export class MessariClient {
 
 		return response;
 	}
+
 	/**
 	 * Get all the quantitative metrics for an asset.
 	 *
