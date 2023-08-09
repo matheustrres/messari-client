@@ -11,6 +11,7 @@ import { IRequest } from '../lib/utils/request';
 import messariApiErrorResponse from './fixtures/messari_api_error_response.json';
 import messariApiGetAllMarketsResponse from './fixtures/messari_api_get_all_markets_response.json';
 import messariApiGetAssetResponse from './fixtures/messari_api_get_asset_response.json';
+import messariApiGetAssetWithMetricsResponse from './fixtures/messari_api_get_asset_with_metrics_response.json';
 import messariApiListAllAssetsNewsResponse from './fixtures/messari_api_list_all_assets_news_response.json';
 import messariApiListAllAssetsResponse from './fixtures/messari_api_list_all_assets_response.json';
 import messariApiListAssetNewsResponse from './fixtures/messari_api_list_asset_news_response.json';
@@ -26,6 +27,7 @@ describe('MessariClient', (): void => {
 
 		mockedRequest.get
 			.mockResolvedValueOnce(messariApiGetAssetResponse)
+			.mockResolvedValueOnce(messariApiGetAssetWithMetricsResponse)
 			.mockResolvedValueOnce(messariApiGetAllMarketsResponse)
 			.mockResolvedValueOnce(messariApiListAllAssetsResponse)
 			.mockResolvedValueOnce(messariApiListAllAssetsNewsResponse)
@@ -46,6 +48,22 @@ describe('MessariClient', (): void => {
 			);
 
 			expect(response).toEqual(messariApiGetAssetResponse);
+		});
+
+		it('should load the metrics of an asset', async (): Promise<void> => {
+			const response: QueryResult<MessariAsset> = await client.getAsset(
+				'bitcoin',
+				{
+					metrics: ['all_time_high', 'market_data'],
+				},
+			);
+
+			expect(response).toEqual(messariApiGetAssetWithMetricsResponse);
+			expect(response.data?.all_time_high).toBeDefined();
+			expect(response.data?.market_data).toBeDefined();
+			expect(response.data?.marketcap).toBe(undefined);
+			expect(response.data?.reddit).toBe(undefined);
+			expect(response.data?.roi_data).toBe(undefined);
 		});
 	});
 
