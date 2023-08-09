@@ -4,6 +4,11 @@ export type MessariAsset = {
 	symbol: string;
 	name: string;
 	slug: string;
+	all_time_high?: MessariAssetMetricsAllTimeHigh | never;
+	market_data?: MessariAssetMarketData | never;
+	marketcap?: MessariAssetMarketCap | never;
+	reddit?: MessariAssetReddit | never;
+	roi_data?: MessariAssetMetricsROIData | never;
 };
 
 export type MessariAssetWithMetrics = {
@@ -19,7 +24,6 @@ export type MessariAssetWithMetrics = {
 		reddit?: MessariAssetReddit;
 		roi_data: MessariAssetMetricsROIData;
 	};
-	// profile: {}
 };
 
 // ---
