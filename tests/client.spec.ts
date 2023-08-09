@@ -3,9 +3,6 @@ import { MockProxy, mock } from 'jest-mock-extended';
 import { MessariClient } from '../lib/client';
 import {
 	MessariAsset,
-	MessariAssetMarketData,
-	MessariAssetMarketDataWithAsset,
-	MessariAssetMetrics,
 	MessariAssetNews,
 	MessariAssetWithMetrics,
 	QueryResult,
@@ -13,8 +10,6 @@ import {
 import { IRequest } from '../lib/utils/request';
 import messariApiErrorResponse from './fixtures/messari_api_error_response.json';
 import messariApiGetAllMarketsResponse from './fixtures/messari_api_get_all_markets_response.json';
-import messariApiGetAssetMarketDataResponse from './fixtures/messari_api_get_asset_market_data_response.json';
-import messariApiGetAssetMetricsResponse from './fixtures/messari_api_get_asset_metrics_response.json';
 import messariApiGetAssetResponse from './fixtures/messari_api_get_asset_response.json';
 import messariApiListAllAssetsNewsResponse from './fixtures/messari_api_list_all_assets_news_response.json';
 import messariApiListAllAssetsResponse from './fixtures/messari_api_list_all_assets_response.json';
@@ -31,8 +26,6 @@ describe('MessariClient', (): void => {
 
 		mockedRequest.get
 			.mockResolvedValueOnce(messariApiGetAssetResponse)
-			.mockResolvedValueOnce(messariApiGetAssetMetricsResponse)
-			.mockResolvedValueOnce(messariApiGetAssetMarketDataResponse)
 			.mockResolvedValueOnce(messariApiGetAllMarketsResponse)
 			.mockResolvedValueOnce(messariApiListAllAssetsResponse)
 			.mockResolvedValueOnce(messariApiListAllAssetsNewsResponse)
@@ -53,25 +46,6 @@ describe('MessariClient', (): void => {
 			);
 
 			expect(response).toEqual(messariApiGetAssetResponse);
-		});
-	});
-
-	describe('.getAssetMetrics', (): void => {
-		it('should get all the quantitative metrics for an asset', async (): Promise<void> => {
-			const response: QueryResult<MessariAssetMetrics> =
-				await client.getAssetMetrics('Polkadot');
-
-			expect(response).toEqual(messariApiGetAssetMetricsResponse);
-		});
-	});
-
-	describe('.getAssetMarketData', (): void => {
-		it('should get the latest market-data for an asset', async (): Promise<void> => {
-			const response: QueryResult<
-				MessariAssetMarketDataWithAsset<MessariAssetMarketData>
-			> = await client.getAssetMarketData('ethereum');
-
-			expect(response).toEqual(messariApiGetAssetMarketDataResponse);
 		});
 	});
 
@@ -121,8 +95,6 @@ describe('MessariClient', (): void => {
 	it('should fail when searching for an invalid asset', async (): Promise<void> => {
 		const promises = [
 			client.getAsset('fake-asset-name'),
-			client.getAssetMetrics('fake-asset-name'),
-			client.getAssetMarketData('fake-asset-name'),
 			client.listAssetNews('fake-asset-name'),
 		];
 

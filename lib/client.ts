@@ -1,12 +1,9 @@
 import {
-	MessariAssetMarketData,
-	MessariAssetMetrics,
 	MessariAssetNews,
 	MessariAssetWithMetrics,
 	MessariAsset,
 	QueryResult,
 	MessariMarket,
-	MessariAssetMarketDataWithAsset,
 } from './typings';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
 import { removeDuplicatesFromArray } from './utils/funcs/remove-duplicates-from-array';
@@ -98,49 +95,6 @@ export class MessariClient {
 		}
 
 		const response = await this.request.get<T>(endpoint);
-
-		if (response.status.error_code && response.status.error_message) {
-			return this.sendError(response);
-		}
-
-		return response;
-	}
-
-	/**
-	 * Get all the quantitative metrics for an asset.
-	 *
-	 * @template {type} T
-	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @returns {Promise<QueryResult<T>>}
-	 */
-	public async getAssetMetrics<T = MessariAssetMetrics>(
-		assetKey: string,
-	): Promise<QueryResult<T>> {
-		const response = await this.request.get<T>(
-			buildAPIEndpoint(`v1/assets/${assetKey}/metrics`),
-		);
-
-		if (response.status.error_code && response.status.error_message) {
-			return this.sendError(response);
-		}
-
-		return response;
-	}
-
-	/**
-	 * Get the latest market-data for an asset. This data is also included in the
-	 * `client.getAssetMetrics` method, but if all you need is market-data, use this.
-	 *
-	 * @template {type} T
-	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @returns {Promise<QueryResult<T>>}
-	 */
-	public async getAssetMarketData<T = MessariAssetMarketData>(
-		assetKey: string,
-	): Promise<QueryResult<MessariAssetMarketDataWithAsset<T>>> {
-		const response = await this.request.get<MessariAssetMarketDataWithAsset<T>>(
-			buildAPIEndpoint(`v1/assets/${assetKey}/metrics/market-data`),
-		);
 
 		if (response.status.error_code && response.status.error_message) {
 			return this.sendError(response);
