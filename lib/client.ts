@@ -6,6 +6,8 @@ import {
 	MessariAssetMetrics,
 } from './typings';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
+import { generateQParams } from './utils/funcs/paginate';
+import { removeDuplicatesFromArray } from './utils/funcs/remove-duplicates-from-array';
 import { IRequest, Request } from './utils/request';
 
 /**
@@ -78,15 +80,12 @@ export class MessariClient {
 		assetOptions?: AssetOptions,
 	): Promise<QueryResult<T>> {
 		let endpoint: string = `v1/assets/${assetKey}/metrics?fields=${MessariClient.BASE_ASSET_FIELDS},`;
-		const params: string[] = [];
+		const qParams: string[] = [];
 
-		if (assetOptions?.metrics?.length) {
-			const metricsQParams: string = assetOptions.metrics.join(',');
+		if (assetOptions?.metrics?.length)
+			qParams.push(assetOptions.metrics.join(','));
 
-			params.push(metricsQParams);
-		}
-
-		if (params.length) endpoint += params.join('&');
+		if (qParams.length) endpoint += qParams.join('&');
 
 		const response = await this.request.get<T>(endpoint);
 
@@ -123,10 +122,29 @@ export class MessariClient {
 	 */
 	public async listAllAssets<
 		T extends Array<Record<string, any>> = MessariAssetMetrics[],
-	>(paginationOptions?: PaginationOptions): Promise<QueryResult<T>> {
-		const response = await this.request.get<T>(
-			buildAPIEndpoint('v2/assets', paginationOptions),
-		);
+	>(
+		assetOptions?: AssetOptions,
+		paginationOptions?: PaginationOptions,
+	): Promise<QueryResult<T>> {
+		let endpoint: string = `v2/assets?fields=${MessariClient.BASE_ASSET_FIELDS}`;
+		const qParams: string[] = [];
+
+		if (assetOptions?.metrics?.length) {
+			const metricsQParams: string = removeDuplicatesFromArray<
+				AvailableMetrics[]
+			>(assetOptions.metrics)
+				.map((metric) => `metrics/${metric}`)
+				.join(',');
+
+			qParams.push(`,${metricsQParams}`);
+		}
+
+		if (paginationOptions)
+			qParams.push('&' + generateQParams<PaginationOptions>(paginationOptions));
+
+		if (qParams.length) endpoint += qParams.join('&');
+
+		const response = await this.request.get<T>(endpoint);
 
 		if (response.status.error_code && response.status.error_message) {
 			return this.sendError(response);
