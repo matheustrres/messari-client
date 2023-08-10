@@ -13,7 +13,6 @@ import { IRequest } from '../lib/utils/request';
 import messariApiErrorResponse from './fixtures/messari_api_error_response.json';
 import messariApiGetAllMarketsResponse from './fixtures/messari_api_get_all_markets_response.json';
 import messariApiGetAssetCustomResponse from './fixtures/messari_api_get_asset_custom_response.json';
-import messariApiGetAssetResponse from './fixtures/messari_api_get_asset_response.json';
 import messariApiGetAssetWithMetricsResponse from './fixtures/messari_api_get_asset_with_metrics_response.json';
 import messariApiListAllAssetsNewsResponse from './fixtures/messari_api_list_all_assets_news_response.json';
 import messariApiListAllAssetsResponse from './fixtures/messari_api_list_all_assets_response.json';
@@ -29,7 +28,6 @@ describe('MessariClient', (): void => {
 		mockedRequest = mock();
 
 		mockedRequest.get
-			.mockResolvedValueOnce(messariApiGetAssetResponse)
 			.mockResolvedValueOnce(messariApiGetAssetWithMetricsResponse)
 			.mockResolvedValueOnce(messariApiGetAssetCustomResponse)
 			.mockResolvedValueOnce(messariApiGetAllMarketsResponse)
@@ -46,15 +44,7 @@ describe('MessariClient', (): void => {
 	});
 
 	describe('.getAsset', (): void => {
-		it('should get basic metadata for an asset', async (): Promise<void> => {
-			const response: QueryResult<MessariAsset> = await client.getAsset(
-				'bitcoin',
-			);
-
-			expect(response).toEqual(messariApiGetAssetResponse);
-		});
-
-		it('should load the metrics of an asset', async (): Promise<void> => {
+		it('should load the basic metadata and metrics for an asset', async (): Promise<void> => {
 			const response: QueryResult<MessariAssetWithMetrics> =
 				await client.getAsset<MessariAssetWithMetrics>('bitcoin', {
 					metrics: ['all_time_high', 'market_data'],
@@ -105,11 +95,22 @@ describe('MessariClient', (): void => {
 	describe('.listAllAssets', (): void => {
 		it('should get the paginated list of all assets and their metrics', async (): Promise<void> => {
 			const response: QueryResult<MessariAssetMetrics[]> =
-				await client.listAllAssets({
-					limit: 5,
-					page: 2,
-				});
+				await client.listAllAssets(
+					{
+						metrics: ['all_time_high', 'market_data'],
+					},
+					{
+						limit: 3,
+						page: 1,
+					},
+				);
 
+			expect(response.data![0].metrics.all_time_high).toBeDefined();
+			expect(response.data![0].metrics.market_data).toBeDefined();
+			expect(response.data![1].metrics.all_time_high).toBeDefined();
+			expect(response.data![1].metrics.market_data).toBeDefined();
+			expect(response.data![2].metrics.all_time_high).toBeDefined();
+			expect(response.data![2].metrics.market_data).toBeDefined();
 			expect(response).toEqual(messariApiListAllAssetsResponse);
 		});
 	});
