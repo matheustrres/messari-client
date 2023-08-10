@@ -1,9 +1,9 @@
 import {
 	MessariAssetNews,
-	MessariAssetWithMetrics,
 	MessariAsset,
 	QueryResult,
 	MessariMarket,
+	MessariAssetMetrics,
 } from './typings';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
 import { removeDuplicatesFromArray } from './utils/funcs/remove-duplicates-from-array';
@@ -72,7 +72,7 @@ export class MessariClient {
 	 * @param {Array<String>} [options.metrics] - The asset's metrics to be loaded
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async getAsset<T = MessariAsset>(
+	public async getAsset<T extends MessariAsset = MessariAsset>(
 		assetKey: string,
 		options?: AssetOptions,
 	): Promise<QueryResult<T>> {
@@ -128,7 +128,7 @@ export class MessariClient {
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async listAllAssets<
-		T extends Array<Record<string, any>> = MessariAssetWithMetrics[],
+		T extends Array<Record<string, any>> = MessariAssetMetrics[],
 	>(paginationOptions?: PaginationOptions): Promise<QueryResult<T>> {
 		const response = await this.request.get<T>(
 			buildAPIEndpoint('v2/assets', paginationOptions),

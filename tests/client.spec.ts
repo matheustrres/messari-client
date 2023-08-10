@@ -3,8 +3,10 @@ import { MockProxy, mock } from 'jest-mock-extended';
 import { MessariClient } from '../lib/client';
 import {
 	MessariAsset,
+	MessariAssetMetrics,
 	MessariAssetNews,
 	MessariAssetWithMetrics,
+	MessariMarket,
 	QueryResult,
 } from '../lib/typings';
 import { IRequest } from '../lib/utils/request';
@@ -51,25 +53,23 @@ describe('MessariClient', (): void => {
 		});
 
 		it('should load the metrics of an asset', async (): Promise<void> => {
-			const response: QueryResult<MessariAsset> = await client.getAsset(
-				'bitcoin',
-				{
+			const response: QueryResult<MessariAssetWithMetrics> =
+				await client.getAsset<MessariAssetWithMetrics>('bitcoin', {
 					metrics: ['all_time_high', 'market_data'],
-				},
-			);
+				});
 
+			expect(response.data).toBeDefined();
+			expect(response.data!.id).toBeDefined();
+			expect(response.data!.all_time_high).toBeDefined();
+			expect(response.data!.market_data).toBeDefined();
 			expect(response).toEqual(messariApiGetAssetWithMetricsResponse);
-			expect(response.data?.all_time_high).toBeDefined();
-			expect(response.data?.market_data).toBeDefined();
-			expect(response.data?.marketcap).toBe(undefined);
-			expect(response.data?.reddit).toBe(undefined);
-			expect(response.data?.roi_data).toBe(undefined);
 		});
 	});
 
 	describe('.getAllMarkets', (): void => {
 		it('should get all markets', async (): Promise<void> => {
-			const response = await client.getAllMarkets();
+			const response: QueryResult<MessariMarket[]> =
+				await client.getAllMarkets();
 
 			expect(response).toEqual(messariApiGetAllMarketsResponse);
 		});
@@ -77,7 +77,7 @@ describe('MessariClient', (): void => {
 
 	describe('.listAllAssets', (): void => {
 		it('should get the paginated list of all assets and their metrics', async (): Promise<void> => {
-			const response: QueryResult<MessariAssetWithMetrics[]> =
+			const response: QueryResult<MessariAssetMetrics[]> =
 				await client.listAllAssets({
 					limit: 5,
 					page: 2,

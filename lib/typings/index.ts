@@ -4,26 +4,14 @@ export type MessariAsset = {
 	symbol: string;
 	name: string;
 	slug: string;
+};
+
+export type MessariAssetWithMetrics = MessariAsset & {
 	all_time_high?: MessariAssetMetricsAllTimeHigh | never;
-	market_data?: MessariAssetMarketData | never;
+	market_data?: MessariAssetMetricsMarketData | never;
 	marketcap?: MessariAssetMarketCap | never;
 	reddit?: MessariAssetReddit | never;
 	roi_data?: MessariAssetMetricsROIData | never;
-};
-
-export type MessariAssetWithMetrics = {
-	id: string;
-	serial_id: number;
-	symbol: string;
-	name: string;
-	slug: string;
-	metrics: {
-		all_time_high: MessariAssetMetricsAllTimeHigh;
-		market_data: MessariAssetMarketData;
-		marketcap: MessariAssetMarketCap;
-		reddit?: MessariAssetReddit;
-		roi_data: MessariAssetMetricsROIData;
-	};
 };
 
 // ---
@@ -46,7 +34,7 @@ export type MessariAssetMetricsROIData = {
 
 // ---
 
-export type MessariAssetMarketData = {
+export type MessariAssetMetricsMarketData = {
 	price_usd: number;
 	price_btc: number;
 	price_eth: number;
@@ -61,6 +49,12 @@ export type MessariAssetMarketData = {
 	ohlcv_last_1_hour?: MessariAssetMarketOHLCV | null;
 	ohlcv_last_24_hour?: MessariAssetMarketOHLCV | null;
 	last_trade_at?: string | null;
+};
+
+// ---
+
+export type MessariAssetMetrics = MessariAsset & {
+	metrics: MessariAssetWithMetrics;
 };
 
 // ---
