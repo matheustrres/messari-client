@@ -71,8 +71,8 @@ export class MessariClient {
 	 * Get basic metadata for an asset.
 	 *
 	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @param {AssetOptions} [options] - The asset's options to be loaded in the request
-	 * @param {Array<String>} [options.metrics] - The asset's metrics to be loaded
+	 * @param {AssetOptions} [assetOptions] - The asset's options to be loaded in the request
+	 * @param {Array<String>} [assetOptions.metrics] - The asset's metrics to be loaded
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async getAsset<T extends MessariAsset = MessariAsset>(
@@ -80,12 +80,9 @@ export class MessariClient {
 		assetOptions?: AssetOptions,
 	): Promise<QueryResult<T>> {
 		let endpoint: string = `v1/assets/${assetKey}/metrics?fields=${MessariClient.BASE_ASSET_FIELDS},`;
-		const qParams: string[] = [];
 
 		if (assetOptions?.metrics?.length)
-			qParams.push(assetOptions.metrics.join(','));
-
-		if (qParams.length) endpoint += qParams.join('&');
+			endpoint += assetOptions.metrics.join(',');
 
 		const response = await this.request.get<T>(endpoint);
 
@@ -115,6 +112,8 @@ export class MessariClient {
 	 * Get the paginated list of all assets and their metrics.
 	 *
 	 * @template {type} T
+	 * @param {AssetOptions} [assetOptions] - The asset's options to be loaded in the request
+	 * @param {Array<String>} [assetOptions.metrics] - The asset's metrics to be loaded
 	 * @param {PaginationOptions} [paginationOptions] - The options to use for pagination
 	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
@@ -127,7 +126,6 @@ export class MessariClient {
 		paginationOptions?: PaginationOptions,
 	): Promise<QueryResult<T>> {
 		let endpoint: string = `v2/assets?fields=${MessariClient.BASE_ASSET_FIELDS}`;
-		const qParams: string[] = [];
 
 		if (assetOptions?.metrics?.length) {
 			const metricsQParams: string = removeDuplicatesFromArray<
@@ -136,13 +134,11 @@ export class MessariClient {
 				.map((metric) => `metrics/${metric}`)
 				.join(',');
 
-			qParams.push(`,${metricsQParams}`);
+			endpoint += `,${metricsQParams}`;
 		}
 
 		if (paginationOptions)
-			qParams.push('&' + generateQParams<PaginationOptions>(paginationOptions));
-
-		if (qParams.length) endpoint += qParams.join('&');
+			endpoint += `&${generateQParams<PaginationOptions>(paginationOptions)}`;
 
 		const response = await this.request.get<T>(endpoint);
 
