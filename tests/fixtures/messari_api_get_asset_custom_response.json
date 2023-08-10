@@ -1,0 +1,26 @@
+{
+  "status": {
+    "elapsed": 2,
+    "timestamp": "2023-08-07T21:52:55.434547008Z"
+  },
+  "data": {
+    "id": "1e31218a-e44e-4285-820c-8282ee222035",
+    "serial_id": 6057,
+    "name": "Bitcoin",
+    "slug": "bitcoin",
+    "symbol": "BTC",
+    "_internal_temp_agora_id": "9793eae6-f374-46b4-8764-c2d224429791",
+    "contract_addresses": null,
+    "supply": {
+      "y_2050": 20986335.65,
+      "y_plus10": 20736767.06,
+      "liquid": 19464561.58,
+      "circulating": 19451731,
+      "y_2050_issued_percent": 92.7487385345426,
+      "annual_inflation_percent": 1.4383832836372574,
+      "stock_to_flow": 69.52249872310027,
+      "y_plus10_issued_percent": 93.86497675207043,
+      "supply_revived_90d": 19450811.82455677
+    }
+  }
+}

@@ -12,6 +12,7 @@ import {
 import { IRequest } from '../lib/utils/request';
 import messariApiErrorResponse from './fixtures/messari_api_error_response.json';
 import messariApiGetAllMarketsResponse from './fixtures/messari_api_get_all_markets_response.json';
+import messariApiGetAssetCustomResponse from './fixtures/messari_api_get_asset_custom_response.json';
 import messariApiGetAssetResponse from './fixtures/messari_api_get_asset_response.json';
 import messariApiGetAssetWithMetricsResponse from './fixtures/messari_api_get_asset_with_metrics_response.json';
 import messariApiListAllAssetsNewsResponse from './fixtures/messari_api_list_all_assets_news_response.json';
@@ -30,6 +31,7 @@ describe('MessariClient', (): void => {
 		mockedRequest.get
 			.mockResolvedValueOnce(messariApiGetAssetResponse)
 			.mockResolvedValueOnce(messariApiGetAssetWithMetricsResponse)
+			.mockResolvedValueOnce(messariApiGetAssetCustomResponse)
 			.mockResolvedValueOnce(messariApiGetAllMarketsResponse)
 			.mockResolvedValueOnce(messariApiListAllAssetsResponse)
 			.mockResolvedValueOnce(messariApiListAllAssetsNewsResponse)
@@ -63,6 +65,31 @@ describe('MessariClient', (): void => {
 			expect(response.data!.all_time_high).toBeDefined();
 			expect(response.data!.market_data).toBeDefined();
 			expect(response).toEqual(messariApiGetAssetWithMetricsResponse);
+		});
+
+		it('should load the metrics of an asset with my own typing', async (): Promise<void> => {
+			type MyAssetType = MessariAsset & {
+				supply: {
+					y_2050: number | null;
+					y_plus10: number | null;
+					y_2050_percent_issued: number | null;
+					supply_yplus_10: number | null;
+					y_plus10_issued_percent: number | null;
+					liquid: number | null;
+					circulating: number | null;
+					stock_to_flow: number | null;
+				};
+			};
+
+			const response: QueryResult<MyAssetType> =
+				await client.getAsset<MyAssetType>('bitcoin', {
+					metrics: ['supply'],
+				});
+
+			expect(response.data).toBeDefined();
+			expect(response.data!.id).toBeDefined();
+			expect(response.data!.supply).toBeDefined();
+			expect(response).toEqual(messariApiGetAssetCustomResponse);
 		});
 	});
 
