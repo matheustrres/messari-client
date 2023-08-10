@@ -6,7 +6,6 @@ import {
 	MessariAssetMetrics,
 } from './typings';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
-import { removeDuplicatesFromArray } from './utils/funcs/remove-duplicates-from-array';
 import { IRequest, Request } from './utils/request';
 
 /**
@@ -43,6 +42,8 @@ type AssetOptions = {
  */
 export class MessariClient {
 	private readonly request: IRequest;
+	private static readonly BASE_ASSET_FIELDS: string =
+		'id,serial_id,name,slug,symbol';
 
 	static validate(apiKey: string): void {
 		if (!apiKey) {
@@ -74,25 +75,18 @@ export class MessariClient {
 	 */
 	public async getAsset<T extends MessariAsset = MessariAsset>(
 		assetKey: string,
-		options?: AssetOptions,
+		assetOptions?: AssetOptions,
 	): Promise<QueryResult<T>> {
-		let endpoint: string;
+		let endpoint: string = `v1/assets/${assetKey}/metrics?fields=${MessariClient.BASE_ASSET_FIELDS},`;
+		const params: string[] = [];
 
-		if (options?.metrics?.length) {
-			const baseFields: string[] = [
-				'id',
-				'serial_id',
-				'name',
-				'slug',
-				'symbol',
-			];
+		if (assetOptions?.metrics?.length) {
+			const metricsQParams: string = assetOptions.metrics.join(',');
 
-			endpoint = `v1/assets/${assetKey}/metrics?fields=${baseFields.join(
-				',',
-			)},${removeDuplicatesFromArray<AvailableMetrics[]>(options.metrics)}`;
-		} else {
-			endpoint = `v1/assets/${assetKey}`;
+			params.push(metricsQParams);
 		}
+
+		if (params.length) endpoint += params.join('&');
 
 		const response = await this.request.get<T>(endpoint);
 
