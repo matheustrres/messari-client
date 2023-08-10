@@ -129,6 +129,35 @@ export type MessariAssetReddit = {
 // ---
 
 /**
+ * All metrics available for search in the Messari api
+ */
+export type AvailableMetrics =
+	| 'all_time_high'
+	| 'blockchain_stats_24_hours'
+	| 'cycle_low'
+	| 'developer_activity'
+	| 'exchange_flows'
+	| 'market_data_liquidity'
+	| 'market_data'
+	| 'marketcap'
+	| 'miner_flows'
+	| 'mining_stats'
+	| 'misc_data'
+	| 'on_chain_data'
+	| 'reddit'
+	| 'risk_metrics'
+	| 'roi_data'
+	| 'roi_by_year'
+	| 'supply_activity'
+	| 'supply_distribution'
+	| 'supply'
+	| 'token_sale_stats';
+
+export type AssetOptions = {
+	metrics?: AvailableMetrics[];
+};
+
+/**
  * Base result of all requests made to the Messari api
  *
  * @template T - Typing for an endpoint response

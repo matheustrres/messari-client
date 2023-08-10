@@ -4,40 +4,13 @@ import {
 	QueryResult,
 	MessariMarket,
 	MessariAssetMetrics,
+	AssetOptions,
+	AvailableMetrics,
 } from './typings';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
 import { generateQParams } from './utils/funcs/paginate';
 import { removeDuplicatesFromArray } from './utils/funcs/remove-duplicates-from-array';
 import { IRequest, Request } from './utils/request';
-
-/**
- * All metrics available for search in the Messari api
- */
-type AvailableMetrics =
-	| 'all_time_high'
-	| 'blockchain_stats_24_hours'
-	| 'cycle_low'
-	| 'developer_activity'
-	| 'exchange_flows'
-	| 'market_data_liquidity'
-	| 'market_data'
-	| 'marketcap'
-	| 'miner_flows'
-	| 'mining_stats'
-	| 'misc_data'
-	| 'on_chain_data'
-	| 'reddit'
-	| 'risk_metrics'
-	| 'roi_data'
-	| 'roi_by_year'
-	| 'supply_activity'
-	| 'supply_distribution'
-	| 'supply'
-	| 'token_sale_stats';
-
-type AssetOptions = {
-	metrics?: AvailableMetrics[];
-};
 
 /**
  * Represents the main MessariClient
