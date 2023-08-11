@@ -86,11 +86,10 @@ export class MessariClient {
 		let endpoint: string = `v2/assets?fields=${MessariClient.BASE_ASSET_FIELDS}`;
 
 		if (assetOptions?.metrics?.length) {
-			const metricsQParams: string = removeDuplicatesFromArray<
-				AvailableMetrics[]
-			>(assetOptions.metrics)
-				.map((metric) => `metrics/${metric}`)
-				.join(',');
+			const metricsQParams: string =
+				removeDuplicatesFromArray<AvailableMetrics>(assetOptions.metrics)
+					.map((metric: AvailableMetrics): string => `metrics/${metric}`)
+					.join(',');
 
 			endpoint += `,${metricsQParams}`;
 		}

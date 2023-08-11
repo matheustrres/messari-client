@@ -1,3 +1,3 @@
-export const removeDuplicatesFromArray = <T extends Array<any>>(array: T) => [
+export const removeDuplicatesFromArray = <T>(array: T[]): T[] => [
 	...new Set(array),
 ];
