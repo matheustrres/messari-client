@@ -3,7 +3,6 @@ import {
 	MessariAsset,
 	QueryResult,
 	MessariMarket,
-	MessariAssetMetrics,
 	AssetOptions,
 	AvailableMetrics,
 } from './typings';
@@ -57,13 +56,7 @@ export class MessariClient {
 		if (assetOptions?.metrics?.length)
 			endpoint += assetOptions.metrics.join(',');
 
-		const response = await this.request.get<T>(endpoint);
-
-		if (response.status.error_code && response.status.error_message) {
-			return this.sendError(response);
-		}
-
-		return response;
+		return this.fetchAPIData<T>(endpoint);
 	}
 
 	/**
@@ -72,13 +65,7 @@ export class MessariClient {
 	 * @returns {Promise<QueryResult<MessariMarket[]>>}
 	 */
 	public async getAllMarkets(): Promise<QueryResult<MessariMarket[]>> {
-		const response = await this.request.get<MessariMarket[]>('v1/markets');
-
-		if (response.status.error_code && response.status.error_message) {
-			return this.sendError(response);
-		}
-
-		return response;
+		return this.fetchAPIData<MessariMarket[]>('v1/markets');
 	}
 
 	/**
@@ -92,7 +79,7 @@ export class MessariClient {
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-  public async listAllAssets<T extends MessariAsset[] = MessariAsset[]>(
+	public async listAllAssets<T extends MessariAsset[] = MessariAsset[]>(
 		assetOptions?: AssetOptions,
 		paginationOptions?: PaginationOptions,
 	): Promise<QueryResult<T>> {
@@ -111,13 +98,7 @@ export class MessariClient {
 		if (paginationOptions)
 			endpoint += `&${generateQParams<PaginationOptions>(paginationOptions)}`;
 
-		const response = await this.request.get<T>(endpoint);
-
-		if (response.status.error_code && response.status.error_message) {
-			return this.sendError(response);
-		}
-
-		return response;
+		return this.fetchAPIData<T>(endpoint);
 	}
 
 	/**
@@ -132,15 +113,7 @@ export class MessariClient {
 	public async listAllAssetsNews<
 		T extends Array<Record<string, any>> = MessariAssetNews[],
 	>(paginationOptions?: PaginationOptions): Promise<QueryResult<T>> {
-		const response = await this.request.get<T>(
-			buildAPIEndpoint('v1/news', paginationOptions),
-		);
-
-		if (response.status.error_code && response.status.error_message) {
-			return this.sendError(response);
-		}
-
-		return response;
+		return this.fetchAPIData<T>(buildAPIEndpoint('v1/news', paginationOptions));
 	}
 
 	/**
@@ -159,25 +132,12 @@ export class MessariClient {
 		assetKey: string,
 		paginationOptions?: PaginationOptions,
 	): Promise<QueryResult<T>> {
-		const response = await this.request.get<T>(
+		return this.fetchAPIData<T>(
 			buildAPIEndpoint(`v1/news/${assetKey}`, paginationOptions),
 		);
-
-		if (response.status.error_code && response.status.error_message) {
-			return this.sendError(response);
-		}
-
-		return response;
 	}
 
-	private sendError(queryResult: QueryResult): QueryResult {
-		return {
-			status: {
-				elapsed: queryResult.status.elapsed,
-				timestamp: queryResult.status.timestamp,
-				error_code: queryResult.status.error_code!,
-				error_message: queryResult.status.error_message!,
-			},
-		};
+	private async fetchAPIData<T>(endpoint: string): Promise<QueryResult<T>> {
+		return this.request.get<T>(endpoint);
 	}
 }
