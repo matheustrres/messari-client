@@ -1,14 +1,15 @@
 import {
-	MessariAssetMarketData,
-	MessariAssetMetrics,
 	MessariAssetNews,
-	MessariAssetWithMetrics,
 	MessariAsset,
 	QueryResult,
 	MessariMarket,
-	MessariAssetMarketDataWithAsset,
+	MessariAssetMetrics,
+	AssetOptions,
+	AvailableMetrics,
 } from './typings';
 import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
+import { generateQParams } from './utils/funcs/paginate';
+import { removeDuplicatesFromArray } from './utils/funcs/remove-duplicates-from-array';
 import { IRequest, Request } from './utils/request';
 
 /**
@@ -16,6 +17,8 @@ import { IRequest, Request } from './utils/request';
  */
 export class MessariClient {
 	private readonly request: IRequest;
+	private static readonly BASE_ASSET_FIELDS: string =
+		'id,serial_id,name,slug,symbol';
 
 	static validate(apiKey: string): void {
 		if (!apiKey) {
@@ -28,7 +31,7 @@ export class MessariClient {
 	 *
 	 * @param {String} messariApiKey - A valid Messari api key
 	 * @param {IRequest} [request] - A request class that implements IRequest
-   * @see {@link https://curr.to/irequest-examples} to find out how to implement your own request class
+	 * @see {@link https://curr.to/irequest-examples} to find out how to implement your own request class
 	 * @see {@link https://messari.io/api/docs} to find out how to get a valid messari api key
 	 */
 	constructor(messariApiKey: string, request?: IRequest) {
@@ -41,54 +44,20 @@ export class MessariClient {
 	 * Get basic metadata for an asset.
 	 *
 	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @returns {Promise<QueryResult<MessariAsset>>}
-	 */
-	public async getAsset(assetKey: string): Promise<QueryResult<MessariAsset>> {
-		const response = await this.request.get<MessariAsset>(
-			buildAPIEndpoint(`v1/assets/${assetKey}`),
-		);
-
-		if (response.status.error_code && response.status.error_message) {
-			return this.sendError(response);
-		}
-
-		return response;
-	}
-	/**
-	 * Get all the quantitative metrics for an asset.
-	 *
-	 * @template {type} T
-	 * @param {string} assetKey - The asset's ID, slug or symbol
+	 * @param {AssetOptions} [assetOptions] - The asset's options to be loaded in the request
+	 * @param {Array<String>} [assetOptions.metrics] - The asset's metrics to be loaded
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async getAssetMetrics<T = MessariAssetMetrics>(
+	public async getAsset<T extends MessariAsset = MessariAsset>(
 		assetKey: string,
+		assetOptions?: AssetOptions,
 	): Promise<QueryResult<T>> {
-		const response = await this.request.get<T>(
-			buildAPIEndpoint(`v1/assets/${assetKey}/metrics`),
-		);
+		let endpoint: string = `v1/assets/${assetKey}/metrics?fields=${MessariClient.BASE_ASSET_FIELDS},`;
 
-		if (response.status.error_code && response.status.error_message) {
-			return this.sendError(response);
-		}
+		if (assetOptions?.metrics?.length)
+			endpoint += assetOptions.metrics.join(',');
 
-		return response;
-	}
-
-	/**
-	 * Get the latest market-data for an asset. This data is also included in the
-	 * `client.getAssetMetrics` method, but if all you need is market-data, use this.
-	 *
-	 * @template {type} T
-	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @returns {Promise<QueryResult<T>>}
-	 */
-	public async getAssetMarketData<T = MessariAssetMarketData>(
-		assetKey: string,
-	): Promise<QueryResult<MessariAssetMarketDataWithAsset<T>>> {
-		const response = await this.request.get<MessariAssetMarketDataWithAsset<T>>(
-			buildAPIEndpoint(`v1/assets/${assetKey}/metrics/market-data`),
-		);
+		const response = await this.request.get<T>(endpoint);
 
 		if (response.status.error_code && response.status.error_message) {
 			return this.sendError(response);
@@ -116,17 +85,33 @@ export class MessariClient {
 	 * Get the paginated list of all assets and their metrics.
 	 *
 	 * @template {type} T
+	 * @param {AssetOptions} [assetOptions] - The asset's options to be loaded in the request
+	 * @param {Array<String>} [assetOptions.metrics] - The asset's metrics to be loaded
 	 * @param {PaginationOptions} [paginationOptions] - The options to use for pagination
 	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async listAllAssets<
-		T extends Array<Record<string, any>> = MessariAssetWithMetrics[],
-	>(paginationOptions?: PaginationOptions): Promise<QueryResult<T>> {
-		const response = await this.request.get<T>(
-			buildAPIEndpoint('v2/assets', paginationOptions),
-		);
+  public async listAllAssets<T extends MessariAsset[] = MessariAsset[]>(
+		assetOptions?: AssetOptions,
+		paginationOptions?: PaginationOptions,
+	): Promise<QueryResult<T>> {
+		let endpoint: string = `v2/assets?fields=${MessariClient.BASE_ASSET_FIELDS}`;
+
+		if (assetOptions?.metrics?.length) {
+			const metricsQParams: string = removeDuplicatesFromArray<
+				AvailableMetrics[]
+			>(assetOptions.metrics)
+				.map((metric) => `metrics/${metric}`)
+				.join(',');
+
+			endpoint += `,${metricsQParams}`;
+		}
+
+		if (paginationOptions)
+			endpoint += `&${generateQParams<PaginationOptions>(paginationOptions)}`;
+
+		const response = await this.request.get<T>(endpoint);
 
 		if (response.status.error_code && response.status.error_message) {
 			return this.sendError(response);

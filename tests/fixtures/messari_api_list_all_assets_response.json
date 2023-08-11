@@ -1,93 +1,119 @@
 {
   "status": {
-    "elapsed": 366,
-    "timestamp": "2023-08-08T13:00:18.083018155Z"
+    "elapsed": 170,
+    "timestamp": "2023-08-10T20:25:40.378534564Z"
   },
   "data": [
     {
-      "id": "00154cd9-98a9-41f1-a9ec-c6559b53dc53",
-      "serial_id": 12708,
-      "symbol": "ALH",
-      "name": "AlloHash",
-      "slug": "allohash",
-      "contract_addresses": [
-        null
-      ],
-      "_internal_temp_agora_id": "",
-      "metrics": [
-        null
-      ],
-      "profile": [
-        null
-      ]
+      "id": "1e31218a-e44e-4285-820c-8282ee222035",
+      "serial_id": 6057,
+      "name": "Bitcoin",
+      "slug": "bitcoin",
+      "symbol": "BTC",
+      "metrics": {
+        "all_time_high": {
+          "price": 68624.0860315693,
+          "at": "2021-11-10T17:00:00Z",
+          "days_since": 638,
+          "percent_down": -57.1075797993717,
+          "breakeven_multiple": 2.331414257629957
+        },
+        "market_data": {
+          "price_usd": 29437.998217288776,
+          "price_btc": 1,
+          "price_eth": 15.925226674809416,
+          "volume_last_24_hours": 7503764745.391407,
+          "real_volume_last_24_hours": 6883752177.853937,
+          "volume_last_24_hours_overstatement_multiple": 1.0900689844024518,
+          "percent_change_usd_last_1_hour": 0,
+          "percent_change_btc_last_1_hour": 0,
+          "percent_change_eth_last_1_hour": 0.06464700505449257,
+          "percent_change_usd_last_24_hours": -0.27144281166494433,
+          "percent_change_btc_last_24_hours": 0,
+          "percent_change_eth_last_24_hours": 0.030204354597851202,
+          "ohlcv_last_1_hour": [
+            null
+          ],
+          "ohlcv_last_24_hour": [
+            null
+          ],
+          "last_trade_at": "2023-08-10T16:17:00Z"
+        }
+      }
     },
     {
-      "id": "0016aff8-c747-4a03-8e66-e17abaa3e346",
-      "serial_id": 7907,
-      "symbol": "ENTR",
-      "name": "EnterDAO",
-      "slug": "enterdao",
-      "contract_addresses": [
-        null
-      ],
-      "_internal_temp_agora_id": "",
-      "metrics": [
-        null
-      ],
-      "profile": [
-        null
-      ]
+      "id": "21c795f5-1bfd-40c3-858e-e9d7e820c6d0",
+      "serial_id": 6059,
+      "name": "Ethereum",
+      "slug": "ethereum",
+      "symbol": "ETH",
+      "metrics": {
+        "all_time_high": {
+          "price": 4847.006174443254,
+          "at": "2021-11-10T15:00:00Z",
+          "days_since": 638,
+          "percent_down": -61.840992509322625,
+          "breakeven_multiple": 2.6206132333088323
+        },
+        "market_data": {
+          "price_usd": 1848.5136079007223,
+          "price_btc": 0.06279345471306878,
+          "price_eth": 1,
+          "volume_last_24_hours": 1858244659.1832054,
+          "real_volume_last_24_hours": 1576205210.391768,
+          "volume_last_24_hours_overstatement_multiple": 1.1789357419528743,
+          "percent_change_usd_last_1_hour": 0,
+          "percent_change_btc_last_1_hour": -0.046108106733965405,
+          "percent_change_eth_last_1_hour": 0,
+          "percent_change_usd_last_24_hours": -0.22282257310631484,
+          "percent_change_btc_last_24_hours": 0.2426469440437994,
+          "percent_change_eth_last_24_hours": 0,
+          "ohlcv_last_1_hour": [
+            null
+          ],
+          "ohlcv_last_24_hour": [
+            null
+          ],
+          "last_trade_at": "2023-08-10T22:18:00Z"
+        }
+      }
     },
     {
-      "id": "0017a365-73e7-4b96-bb12-d1e8b8b0c376",
-      "serial_id": 74431,
-      "symbol": "hatchy",
-      "name": "HatchyPocket",
-      "slug": "hatchypocket",
-      "contract_addresses": [
-        null
-      ],
-      "_internal_temp_agora_id": "",
-      "metrics": [
-        null
-      ],
-      "profile": [
-        null
-      ]
-    },
-    {
-      "id": "0018b9a5-f16d-440b-a617-a7c52ae2fc42",
-      "serial_id": 14919,
-      "symbol": "VOLT",
-      "name": "Voltage",
-      "slug": "voltage",
-      "contract_addresses": [
-        null
-      ],
-      "_internal_temp_agora_id": "",
-      "metrics": [
-        null
-      ],
-      "profile": [
-        null
-      ]
-    },
-    {
-      "id": "001adcf3-e807-41b4-a865-92bfce293a55",
-      "serial_id": 305808,
-      "symbol": "ron",
-      "name": "President Ron DeSantis",
-      "slug": "president-ron-desantis",
-      "contract_addresses": [
-        null
-      ],
-      "_internal_temp_agora_id": "",
-      "metrics": [
-        null
-      ],
-      "profile": [
-        null
-      ]
+      "id": "51f8ea5e-f426-4f40-939a-db7e05495374",
+      "serial_id": 140,
+      "name": "Tether",
+      "slug": "tether",
+      "symbol": "USDT",
+      "metrics": {
+        "all_time_high": {
+          "price": 1.1975078714950191,
+          "at": "2014-01-26T01:00:00Z",
+          "days_since": 3483,
+          "percent_down": -16.582443053679082,
+          "breakeven_multiple": 1.1987884045123722
+        },
+        "market_data": {
+          "price_usd": 0.998960623630601,
+          "price_btc": 0.0000339343937810254,
+          "price_eth": 0.0005404129130350724,
+          "volume_last_24_hours": 11142573746.850792,
+          "real_volume_last_24_hours": 10312089108.618057,
+          "volume_last_24_hours_overstatement_multiple": 1.0805350525470807,
+          "percent_change_usd_last_1_hour": 0,
+          "percent_change_btc_last_1_hour": -0.046108106733965405,
+          "percent_change_eth_last_1_hour": 0.06464700505449257,
+          "percent_change_usd_last_24_hours": -0.03226312957197187,
+          "percent_change_btc_last_24_hours": 0.4332063875781424,
+          "percent_change_eth_last_24_hours": 0.26938403669082367,
+          "ohlcv_last_1_hour": [
+            null
+          ],
+          "ohlcv_last_24_hour": [
+            null
+          ],
+          "last_trade_at": "2023-08-10T22:00:00Z"
+        }
+      }
     }
   ]
 }

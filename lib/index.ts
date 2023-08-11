@@ -1,16 +1,15 @@
 export type {
 	MessariAsset,
-	MessariAssetMarketCap,
-	MessariAssetMarketData,
-	MessariAssetMarketOHLCV,
-	MessariAssetMetrics,
+	MessariAssetWithMetrics,
 	MessariAssetMetricsAllTimeHigh,
 	MessariAssetMetricsROIData,
-	MessariAssetNews,
-	MessariAssetMarketDataWithAsset,
-	MessariAssetReddit,
-	MessariAssetWithMetrics,
+	MessariAssetMetricsMarketData,
+	MessariAssetMetrics,
 	MessariMarket,
+	MessariAssetNews,
+	MessariAssetMarketCap,
+	MessariAssetMarketOHLCV,
+	MessariAssetReddit,
 	QueryResult,
 } from './typings';
 export { IRequest } from './utils/request';

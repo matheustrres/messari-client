@@ -1,0 +1,122 @@
+{
+  "status": {
+    "elapsed": 170,
+    "timestamp": "2023-08-10T20:25:40.378534564Z"
+  },
+  "data": [
+    {
+      "id": "1e31218a-e44e-4285-820c-8282ee222035",
+      "serial_id": 6057,
+      "name": "Bitcoin",
+      "slug": "bitcoin",
+      "symbol": "BTC",
+      "metrics": {
+        "mining_stats": {
+          "mining_algo": "SHA-256",
+          "network_hash_rate": "412878 PH/s",
+          "available_on_nicehash_percent": 0.020950155290474608,
+          "1_hour_attack_cost": null,
+          "24_hours_attack_cost": null,
+          "attack_appeal": null,
+          "hash_rate": 330756211.7722732,
+          "hash_rate_30d_average": 374304645.56316566,
+          "mining_revenue_per_hash_usd": 8.42475e-7,
+          "mining_revenue_per_hash_native_units": 2.9e-11,
+          "mining_revenue_per_hash_per_second_usd": 0.072940871576,
+          "mining_revenue_per_hash_per_second_native_units": 0.000002465639,
+          "mining_revenue_from_fees_percent_last_24_hours": 2.6138579474,
+          "mining_revenue_native": 818.06199329,
+          "mining_revenue_usd": 24075695.28024761,
+          "mining_revenue_total": 53041777564.85846,
+          "average_difficulty": 52391178981379.36
+        },
+        "developer_activity": {
+          "stars": 70708,
+          "watchers": 3942,
+          "commits_last_3_months": null,
+          "commits_last_1_year": null,
+          "lines_added_last_3_months": null,
+          "lines_added_last_1_year": null,
+          "lines_deleted_last_3_months": null,
+          "lines_deleted_last_1_year": null
+        }
+      }
+    },
+    {
+      "id": "21c795f5-1bfd-40c3-858e-e9d7e820c6d0",
+      "serial_id": 6059,
+      "name": "Ethereum",
+      "slug": "ethereum",
+      "symbol": "ETH",
+      "metrics": {
+        "mining_stats": {
+          "mining_algo": null,
+          "network_hash_rate": null,
+          "available_on_nicehash_percent": null,
+          "1_hour_attack_cost": null,
+          "24_hours_attack_cost": null,
+          "attack_appeal": null,
+          "hash_rate": null,
+          "hash_rate_30d_average": null,
+          "mining_revenue_per_hash_usd": null,
+          "mining_revenue_per_hash_native_units": null,
+          "mining_revenue_per_hash_per_second_usd": null,
+          "mining_revenue_per_hash_per_second_native_units": null,
+          "mining_revenue_from_fees_percent_last_24_hours": 100,
+          "mining_revenue_native": 576.4010851097992,
+          "mining_revenue_usd": 1066855.3273180204,
+          "mining_revenue_total": null,
+          "average_difficulty": 0
+        },
+        "developer_activity": {
+          "stars": 43252,
+          "watchers": 2214,
+          "commits_last_3_months": null,
+          "commits_last_1_year": null,
+          "lines_added_last_3_months": null,
+          "lines_added_last_1_year": null,
+          "lines_deleted_last_3_months": null,
+          "lines_deleted_last_1_year": null
+        }
+      }
+    },
+    {
+      "id": "51f8ea5e-f426-4f40-939a-db7e05495374",
+      "serial_id": 140,
+      "name": "Tether",
+      "slug": "tether",
+      "symbol": "USDT",
+      "metrics": {
+        "mining_stats": {
+          "mining_algo": null,
+          "network_hash_rate": null,
+          "available_on_nicehash_percent": null,
+          "1_hour_attack_cost": null,
+          "24_hours_attack_cost": null,
+          "attack_appeal": null,
+          "hash_rate": null,
+          "hash_rate_30d_average": null,
+          "mining_revenue_per_hash_usd": null,
+          "mining_revenue_per_hash_native_units": null,
+          "mining_revenue_per_hash_per_second_usd": null,
+          "mining_revenue_per_hash_per_second_native_units": null,
+          "mining_revenue_from_fees_percent_last_24_hours": null,
+          "mining_revenue_native": null,
+          "mining_revenue_usd": null,
+          "mining_revenue_total": null,
+          "average_difficulty": null
+        },
+        "developer_activity": {
+          "stars": null,
+          "watchers": null,
+          "commits_last_3_months": null,
+          "commits_last_1_year": null,
+          "lines_added_last_3_months": null,
+          "lines_added_last_1_year": null,
+          "lines_deleted_last_3_months": null,
+          "lines_deleted_last_1_year": null
+        }
+      }
+    }
+  ]
+}
