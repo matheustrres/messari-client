@@ -53,8 +53,8 @@ export type MessariAssetMetricsMarketData = {
 
 // ---
 
-export type MessariAssetMetrics = MessariAsset & {
-	metrics: MessariAssetWithMetrics;
+export type MessariAssetMetrics<T = MessariAssetWithMetrics> = MessariAsset & {
+	metrics: T;
 };
 
 // ---
