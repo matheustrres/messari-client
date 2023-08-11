@@ -5,115 +5,144 @@
   },
   "data": [
     {
-      "id": "1e31218a-e44e-4285-820c-8282ee222035",
-      "serial_id": 6057,
-      "name": "Bitcoin",
-      "slug": "bitcoin",
-      "symbol": "BTC",
-      "metrics": {
-        "all_time_high": {
-          "price": 68624.0860315693,
-          "at": "2021-11-10T17:00:00Z",
-          "days_since": 638,
-          "percent_down": -57.1075797993717,
-          "breakeven_multiple": 2.331414257629957
-        },
-        "market_data": {
-          "price_usd": 29437.998217288776,
-          "price_btc": 1,
-          "price_eth": 15.925226674809416,
-          "volume_last_24_hours": 7503764745.391407,
-          "real_volume_last_24_hours": 6883752177.853937,
-          "volume_last_24_hours_overstatement_multiple": 1.0900689844024518,
-          "percent_change_usd_last_1_hour": 0,
-          "percent_change_btc_last_1_hour": 0,
-          "percent_change_eth_last_1_hour": 0.06464700505449257,
-          "percent_change_usd_last_24_hours": -0.27144281166494433,
-          "percent_change_btc_last_24_hours": 0,
-          "percent_change_eth_last_24_hours": 0.030204354597851202,
-          "ohlcv_last_1_hour": [
-            null
-          ],
-          "ohlcv_last_24_hour": [
-            null
-          ],
-          "last_trade_at": "2023-08-10T16:17:00Z"
-        }
-      }
+      "id": "0000fd96-f431-44ad-9f4d-f9116e03a8d6",
+      "serial_id": 277659,
+      "name": "SuiPepe",
+      "slug": "suipepe-0",
+      "symbol": "spepe"
     },
     {
-      "id": "21c795f5-1bfd-40c3-858e-e9d7e820c6d0",
-      "serial_id": 6059,
-      "name": "Ethereum",
-      "slug": "ethereum",
-      "symbol": "ETH",
-      "metrics": {
-        "all_time_high": {
-          "price": 4847.006174443254,
-          "at": "2021-11-10T15:00:00Z",
-          "days_since": 638,
-          "percent_down": -61.840992509322625,
-          "breakeven_multiple": 2.6206132333088323
-        },
-        "market_data": {
-          "price_usd": 1848.5136079007223,
-          "price_btc": 0.06279345471306878,
-          "price_eth": 1,
-          "volume_last_24_hours": 1858244659.1832054,
-          "real_volume_last_24_hours": 1576205210.391768,
-          "volume_last_24_hours_overstatement_multiple": 1.1789357419528743,
-          "percent_change_usd_last_1_hour": 0,
-          "percent_change_btc_last_1_hour": -0.046108106733965405,
-          "percent_change_eth_last_1_hour": 0,
-          "percent_change_usd_last_24_hours": -0.22282257310631484,
-          "percent_change_btc_last_24_hours": 0.2426469440437994,
-          "percent_change_eth_last_24_hours": 0,
-          "ohlcv_last_1_hour": [
-            null
-          ],
-          "ohlcv_last_24_hour": [
-            null
-          ],
-          "last_trade_at": "2023-08-10T22:18:00Z"
-        }
-      }
+      "id": "0004e349-6b2a-42b9-9e09-f8679617a9df",
+      "serial_id": 6042,
+      "name": "Acuity",
+      "slug": "acuity",
+      "symbol": "ACU"
     },
     {
-      "id": "51f8ea5e-f426-4f40-939a-db7e05495374",
-      "serial_id": 140,
-      "name": "Tether",
-      "slug": "tether",
-      "symbol": "USDT",
-      "metrics": {
-        "all_time_high": {
-          "price": 1.1975078714950191,
-          "at": "2014-01-26T01:00:00Z",
-          "days_since": 3483,
-          "percent_down": -16.582443053679082,
-          "breakeven_multiple": 1.1987884045123722
-        },
-        "market_data": {
-          "price_usd": 0.998960623630601,
-          "price_btc": 0.0000339343937810254,
-          "price_eth": 0.0005404129130350724,
-          "volume_last_24_hours": 11142573746.850792,
-          "real_volume_last_24_hours": 10312089108.618057,
-          "volume_last_24_hours_overstatement_multiple": 1.0805350525470807,
-          "percent_change_usd_last_1_hour": 0,
-          "percent_change_btc_last_1_hour": -0.046108106733965405,
-          "percent_change_eth_last_1_hour": 0.06464700505449257,
-          "percent_change_usd_last_24_hours": -0.03226312957197187,
-          "percent_change_btc_last_24_hours": 0.4332063875781424,
-          "percent_change_eth_last_24_hours": 0.26938403669082367,
-          "ohlcv_last_1_hour": [
-            null
-          ],
-          "ohlcv_last_24_hour": [
-            null
-          ],
-          "last_trade_at": "2023-08-10T22:00:00Z"
-        }
-      }
+      "id": "000abcc9-0325-46ec-b39c-9974fe78faa3",
+      "serial_id": 1188,
+      "name": "Rigoblock",
+      "slug": "rigoblock",
+      "symbol": null
+    },
+    {
+      "id": "000b948f-a246-4c10-bddd-066b7c4fb3a4",
+      "serial_id": 1109,
+      "name": "DaxxCoin",
+      "slug": "daxxcoin",
+      "symbol": "DAXX"
+    },
+    {
+      "id": "000f7ba4-08d5-4558-8833-e3c7004c69ae",
+      "serial_id": 15780,
+      "name": "PokemonSpace",
+      "slug": "pokemonspace",
+      "symbol": "POS"
+    },
+    {
+      "id": "0011ab47-8c2d-4d8d-bb10-6357cc0d9234",
+      "serial_id": 5870,
+      "name": "AgentMile",
+      "slug": "agentmile",
+      "symbol": null
+    },
+    {
+      "id": "00154cd9-98a9-41f1-a9ec-c6559b53dc53",
+      "serial_id": 12708,
+      "name": "AlloHash",
+      "slug": "allohash",
+      "symbol": "ALH"
+    },
+    {
+      "id": "0016aff8-c747-4a03-8e66-e17abaa3e346",
+      "serial_id": 7907,
+      "name": "EnterDAO",
+      "slug": "enterdao",
+      "symbol": "ENTR"
+    },
+    {
+      "id": "0017a365-73e7-4b96-bb12-d1e8b8b0c376",
+      "serial_id": 74431,
+      "name": "HatchyPocket",
+      "slug": "hatchypocket",
+      "symbol": "hatchy"
+    },
+    {
+      "id": "0018b9a5-f16d-440b-a617-a7c52ae2fc42",
+      "serial_id": 14919,
+      "name": "Voltage",
+      "slug": "voltage",
+      "symbol": "VOLT"
+    },
+    {
+      "id": "001adcf3-e807-41b4-a865-92bfce293a55",
+      "serial_id": 305808,
+      "name": "President Ron DeSantis",
+      "slug": "president-ron-desantis",
+      "symbol": "ron"
+    },
+    {
+      "id": "00201fdd-a97b-41e2-a0b7-23e7b013faab",
+      "serial_id": 39042,
+      "name": "Uxcord Token",
+      "slug": "uxcord-token",
+      "symbol": "uxt"
+    },
+    {
+      "id": "00235344-d797-41df-b900-2fa834842be8",
+      "serial_id": 155144,
+      "name": "Storepay",
+      "slug": "storepay-0",
+      "symbol": "spc"
+    },
+    {
+      "id": "0024303e-4d4b-4ca7-89a5-be980a198db3",
+      "serial_id": 289734,
+      "name": "SUIA",
+      "slug": "suia-0",
+      "symbol": "suia"
+    },
+    {
+      "id": "0025861a-9a01-4edd-a192-f4949377d42a",
+      "serial_id": 11822,
+      "name": "Plair",
+      "slug": "plair",
+      "symbol": "PLA"
+    },
+    {
+      "id": "0027fc83-a360-4197-8bb1-b2efaa767558",
+      "serial_id": 284693,
+      "name": "Cosmic FOMO",
+      "slug": "cosmic-fomo-0",
+      "symbol": "cosmic"
+    },
+    {
+      "id": "002d393b-d3f8-4de9-9938-1ee4768a84a5",
+      "serial_id": 19121,
+      "name": "Jarvis Synthetic Singapore Dollar",
+      "slug": "jarvis-synthetic-singapore-dollar",
+      "symbol": "JSGD"
+    },
+    {
+      "id": "002d45fb-9618-4eb6-abf8-18b41ec6fe3e",
+      "serial_id": 40663,
+      "name": "OKX Staked DOT2",
+      "slug": "okx-staked-dot2",
+      "symbol": "okdot2"
+    },
+    {
+      "id": "0030b28f-26ea-4929-9cf2-a1b21df83d7d",
+      "serial_id": 119721,
+      "name": "Locker Token",
+      "slug": "locker-token-0",
+      "symbol": "lkt"
+    },
+    {
+      "id": "0035864b-2116-499e-98ca-08954b4ed401",
+      "serial_id": 20547,
+      "name": "Penrose Finance",
+      "slug": "penrose-finance",
+      "symbol": "pen"
     }
   ]
 }
