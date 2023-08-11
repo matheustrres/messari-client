@@ -14,11 +14,11 @@ import messariApiGetAllMarketsResponse from './fixtures/messari_api_get_all_mark
 import messariApiGetAssetCustomResponse from './fixtures/messari_api_get_asset_custom_response.json';
 import messariApiGetAssetResponse from './fixtures/messari_api_get_asset_response.json';
 import messariApiListAllAssetsCustomResponse from './fixtures/messari_api_list_all_assets_custom_response.json';
-import messariApiListAllAssetsNewsCustomResponse from './fixtures/messari_api_list_all_assets_news_custom_response.json';
-import messariApiListAllAssetsNewsResponse from './fixtures/messari_api_list_all_assets_news_response.json';
+import messariApilistNewsForAllAssetsCustomResponse from './fixtures/messari_api_list_all_assets_news_custom_response.json';
+import messariApilistNewsForAllAssetsResponse from './fixtures/messari_api_list_all_assets_news_response.json';
 import messariApiListAllAssetsResponse from './fixtures/messari_api_list_all_assets_response.json';
-import messariApiListAssetNewsCustomResponse from './fixtures/messari_api_list_asset_news_custom_response.json';
-import messariApiListAssetNewsResponse from './fixtures/messari_api_list_asset_news_response.json';
+import messariApilistNewsForAssetCustomResponse from './fixtures/messari_api_list_asset_news_custom_response.json';
+import messariApilistNewsForAssetResponse from './fixtures/messari_api_list_asset_news_response.json';
 
 const apiKey = process.env.MESSARI_API_KEY as string;
 
@@ -35,10 +35,10 @@ describe('MessariClient', (): void => {
 			.mockResolvedValueOnce(messariApiGetAllMarketsResponse)
 			.mockResolvedValueOnce(messariApiListAllAssetsResponse)
 			.mockResolvedValueOnce(messariApiListAllAssetsCustomResponse)
-			.mockResolvedValueOnce(messariApiListAllAssetsNewsResponse)
-			.mockResolvedValueOnce(messariApiListAllAssetsNewsCustomResponse)
-			.mockResolvedValueOnce(messariApiListAssetNewsResponse)
-			.mockResolvedValueOnce(messariApiListAssetNewsCustomResponse)
+			.mockResolvedValueOnce(messariApilistNewsForAllAssetsResponse)
+			.mockResolvedValueOnce(messariApilistNewsForAllAssetsCustomResponse)
+			.mockResolvedValueOnce(messariApilistNewsForAssetResponse)
+			.mockResolvedValueOnce(messariApilistNewsForAssetCustomResponse)
 			.mockResolvedValue(messariApiErrorResponse);
 
 		client = new MessariClient(apiKey, mockedRequest);
@@ -178,22 +178,22 @@ describe('MessariClient', (): void => {
 		});
 	});
 
-	describe('.listAllAssetsNews', (): void => {
+	describe('.listNewsForAllAssets', (): void => {
 		it('should get the list of latest news and analysis for ALL assets', async (): Promise<void> => {
 			const response: QueryResult<MessariAssetNews[]> =
-				await client.listAllAssetsNews();
+				await client.listNewsForAllAssets();
 
 			expect(mockedRequest.get).toHaveBeenNthCalledWith(6, 'v1/news');
 
 			expect(response.data).toBeDefined();
 			expect(response.data!.length).toBe(20);
 
-			expect(response).toEqual(messariApiListAllAssetsNewsResponse);
+			expect(response).toEqual(messariApilistNewsForAllAssetsResponse);
 		});
 
 		it('should get the PAGINATED list of latest news and analysis for assets', async (): Promise<void> => {
 			const response: QueryResult<MessariAssetNews[]> =
-				await client.listAllAssetsNews({
+				await client.listNewsForAllAssets({
 					limit: 2,
 					page: 2,
 				});
@@ -206,26 +206,26 @@ describe('MessariClient', (): void => {
 			expect(response.data).toBeDefined();
 			expect(response.data!.length).toBe(2);
 
-			expect(response).toEqual(messariApiListAllAssetsNewsCustomResponse);
+			expect(response).toEqual(messariApilistNewsForAllAssetsCustomResponse);
 		});
 	});
 
-	describe('.listAssetNews', (): void => {
+	describe('.listNewsForAsset', (): void => {
 		it('should get the list of latest news and analysis for A SINGLE asset', async (): Promise<void> => {
 			const response: QueryResult<MessariAssetNews[]> =
-				await client.listAssetNews('ethereum');
+				await client.listNewsForAsset('ethereum');
 
 			expect(mockedRequest.get).toHaveBeenNthCalledWith(8, 'v1/news/ethereum');
 
 			expect(response.data).toBeDefined();
 			expect(response.data!.length).toBe(20);
 
-			expect(response).toEqual(messariApiListAssetNewsResponse);
+			expect(response).toEqual(messariApilistNewsForAssetResponse);
 		});
 
 		it('should get the PAGINATED list of latest news and analysis for A SINGLE asset', async (): Promise<void> => {
 			const response: QueryResult<MessariAssetNews[]> =
-				await client.listAssetNews('ethereum', {
+				await client.listNewsForAsset('ethereum', {
 					limit: 2,
 				});
 
@@ -237,14 +237,14 @@ describe('MessariClient', (): void => {
 			expect(response.data).toBeDefined();
 			expect(response.data!.length).toBe(2);
 
-			expect(response).toEqual(messariApiListAssetNewsCustomResponse);
+			expect(response).toEqual(messariApilistNewsForAssetCustomResponse);
 		});
 	});
 
 	it('should fail when searching for an invalid asset', async (): Promise<void> => {
 		const promises = [
 			client.getAsset('fake-asset-name'),
-			client.listAssetNews('fake-asset-name'),
+			client.listNewsForAsset('fake-asset-name'),
 		];
 
 		const results: QueryResult[] = await Promise.all(promises);

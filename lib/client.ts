@@ -109,7 +109,7 @@ export class MessariClient {
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async listAllAssetsNews<
+	public async listNewsForAllAssets<
 		T extends Array<Record<string, any>> = MessariAssetNews[],
 	>(paginationOptions?: PaginationOptions): Promise<QueryResult<T>> {
 		return this.fetchAPIData<T>(buildAPIEndpoint('v1/news', paginationOptions));
@@ -125,7 +125,7 @@ export class MessariClient {
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async listAssetNews<
+	public async listNewsForAsset<
 		T extends Array<Record<string, any>> = MessariAssetNews[],
 	>(
 		assetKey: string,
