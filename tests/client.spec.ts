@@ -14,6 +14,7 @@ import messariApiErrorResponse from './fixtures/messari_api_error_response.json'
 import messariApiGetAllMarketsResponse from './fixtures/messari_api_get_all_markets_response.json';
 import messariApiGetAssetCustomResponse from './fixtures/messari_api_get_asset_custom_response.json';
 import messariApiGetAssetWithMetricsResponse from './fixtures/messari_api_get_asset_with_metrics_response.json';
+import messariApiListAllAssetsCustomResponse from './fixtures/messari_api_list_all_assets_custom_response.json';
 import messariApiListAllAssetsNewsResponse from './fixtures/messari_api_list_all_assets_news_response.json';
 import messariApiListAllAssetsResponse from './fixtures/messari_api_list_all_assets_response.json';
 import messariApiListAssetNewsResponse from './fixtures/messari_api_list_asset_news_response.json';
@@ -32,6 +33,7 @@ describe('MessariClient', (): void => {
 			.mockResolvedValueOnce(messariApiGetAssetCustomResponse)
 			.mockResolvedValueOnce(messariApiGetAllMarketsResponse)
 			.mockResolvedValueOnce(messariApiListAllAssetsResponse)
+			.mockResolvedValueOnce(messariApiListAllAssetsCustomResponse)
 			.mockResolvedValueOnce(messariApiListAllAssetsNewsResponse)
 			.mockResolvedValueOnce(messariApiListAssetNewsResponse)
 			.mockResolvedValue(messariApiErrorResponse);
@@ -105,13 +107,55 @@ describe('MessariClient', (): void => {
 					},
 				);
 
-			expect(response.data![0].metrics.all_time_high).toBeDefined();
-			expect(response.data![0].metrics.market_data).toBeDefined();
-			expect(response.data![1].metrics.all_time_high).toBeDefined();
-			expect(response.data![1].metrics.market_data).toBeDefined();
-			expect(response.data![2].metrics.all_time_high).toBeDefined();
-			expect(response.data![2].metrics.market_data).toBeDefined();
+			expect(response.data).toBeDefined();
+
+			for (const data of response.data!) {
+				expect(data.metrics.all_time_high).toBeDefined();
+				expect(data.metrics.market_data).toBeDefined();
+			}
+
 			expect(response).toEqual(messariApiListAllAssetsResponse);
+		});
+
+		it('should get the paginated list of 3 assets and their metrics with my own typing', async (): Promise<void> => {
+			type MyMetrics = MessariAssetMetrics<{
+				mining_stats: {
+					mining_algo: string | null;
+					network_hash_rate: string | null;
+					available_on_nicehash_percent: number | null;
+					attack_appeal: number | null;
+					hash_rate: number | null;
+					hash_rate_30d_average: number | null;
+					mining_revenue_native: number | null;
+				};
+				developer_activity: {
+					stars: number | null;
+					watchers: number | null;
+					commits_last_3_months: number | null;
+					commits_last_1_year: number | null;
+					lines_added_last_3_months: number | null;
+				};
+			}>;
+
+			const response = await client.listAllAssets<MyMetrics[]>(
+				{
+					metrics: ['mining_stats', 'developer_activity'],
+				},
+				{
+					limit: 3,
+					page: 1,
+				},
+			);
+
+			expect(response.data).toBeDefined();
+			expect(response.data!.length).toBe(3);
+
+			for (const data of response.data!) {
+				expect(data.metrics.mining_stats).toBeDefined();
+				expect(data.metrics.developer_activity).toBeDefined();
+			}
+
+			expect(response).toEqual(messariApiListAllAssetsCustomResponse);
 		});
 	});
 
