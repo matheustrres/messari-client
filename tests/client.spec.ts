@@ -97,7 +97,7 @@ describe('MessariClient', (): void => {
 	describe('.listAllAssets', (): void => {
 		it('should get the paginated list of all assets and their metrics', async (): Promise<void> => {
 			const response: QueryResult<MessariAssetMetrics[]> =
-				await client.listAllAssets(
+				await client.listAllAssets<MessariAssetMetrics[]>(
 					{
 						metrics: ['all_time_high', 'market_data'],
 					},

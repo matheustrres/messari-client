@@ -92,7 +92,7 @@ export class MessariClient {
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async listAllAssets<T extends MessariAsset[] = MessariAssetMetrics[]>(
+  public async listAllAssets<T extends MessariAsset[] = MessariAsset[]>(
 		assetOptions?: AssetOptions,
 		paginationOptions?: PaginationOptions,
 	): Promise<QueryResult<T>> {
