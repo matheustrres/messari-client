@@ -24,3 +24,7 @@ lib
 .eslintrc
 .eslintignore
 .prettierrc
+
+# tsconfig
+tsconfig.json
+tsconfig.build.json
