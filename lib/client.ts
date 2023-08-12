@@ -51,10 +51,10 @@ export class MessariClient {
 		assetKey: string,
 		assetOptions?: AssetOptions,
 	): Promise<QueryResult<T>> {
-		let endpoint: string = `v1/assets/${assetKey}/metrics?fields=${MessariClient.BASE_ASSET_FIELDS},`;
+		let endpoint: string = `v1/assets/${assetKey}/metrics?fields=${MessariClient.BASE_ASSET_FIELDS}`;
 
 		if (assetOptions?.metrics?.length)
-			endpoint += assetOptions.metrics.join(',');
+			endpoint += `,${assetOptions.metrics.join(',')}`;
 
 		return this.fetchAPIData<T>(endpoint);
 	}

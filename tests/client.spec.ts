@@ -56,7 +56,7 @@ describe('MessariClient', (): void => {
 
 			expect(mockedRequest.get).toHaveBeenNthCalledWith(
 				1,
-				'v1/assets/bitcoin/metrics?fields=id,serial_id,name,slug,symbol,',
+				'v1/assets/bitcoin/metrics?fields=id,serial_id,name,slug,symbol',
 			);
 
 			expect(response).toEqual(messariApiGetAssetResponse);
