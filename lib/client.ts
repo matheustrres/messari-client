@@ -109,10 +109,12 @@ export class MessariClient {
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async listNewsForAllAssets<
-		T extends Array<Record<string, any>> = MessariAssetNews[],
-	>(paginationOptions?: PaginationOptions): Promise<QueryResult<T>> {
-		return this.fetchAPIData<T>(buildAPIEndpoint('v1/news', paginationOptions));
+	public async listNewsForAllAssets(
+		paginationOptions?: PaginationOptions,
+	): Promise<QueryResult<MessariAssetNews[]>> {
+		const endpoint: string = buildAPIEndpoint('v1/news', paginationOptions);
+
+		return this.fetchAPIData<MessariAssetNews[]>(endpoint);
 	}
 
 	/**
@@ -125,15 +127,16 @@ export class MessariClient {
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
-	public async listNewsForAsset<
-		T extends Array<Record<string, any>> = MessariAssetNews[],
-	>(
+	public async listNewsForAsset(
 		assetKey: string,
 		paginationOptions?: PaginationOptions,
-	): Promise<QueryResult<T>> {
-		return this.fetchAPIData<T>(
-			buildAPIEndpoint(`v1/news/${assetKey}`, paginationOptions),
+	): Promise<QueryResult<MessariAssetNews[]>> {
+		const endpoint: string = buildAPIEndpoint(
+			`v1/news/${assetKey}`,
+			paginationOptions,
 		);
+
+		return this.fetchAPIData<MessariAssetNews[]>(endpoint);
 	}
 
 	private async fetchAPIData<T>(endpoint: string): Promise<QueryResult<T>> {
