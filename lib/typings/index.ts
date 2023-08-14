@@ -126,7 +126,13 @@ export type MessariAssetReddit = {
 	subscribers: number | null;
 };
 
-// ---
+// API
+
+export type MessariAPIPaginationOptions = {
+	page?: number;
+	limit?: number;
+	sort?: 'id'; // | 'marketcap desc'
+};
 
 /**
  * All metrics available for search in the Messari api
