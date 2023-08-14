@@ -200,7 +200,7 @@ describe('MessariClient', (): void => {
 
 			expect(mockedRequest.get).toHaveBeenNthCalledWith(
 				7,
-				'v1/news?page=2&limit=2&sort=id',
+				'v1/news?limit=2&page=2',
 			);
 
 			expect(response.data).toBeDefined();
@@ -231,7 +231,7 @@ describe('MessariClient', (): void => {
 
 			expect(mockedRequest.get).toHaveBeenNthCalledWith(
 				9,
-				'v1/news/ethereum?page=1&limit=2&sort=id',
+				'v1/news/ethereum?limit=2',
 			);
 
 			expect(response.data).toBeDefined();
