@@ -5,9 +5,9 @@ import {
 	MessariMarket,
 	AssetOptions,
 	AvailableMetrics,
+	MessariAPIPaginationOptions,
 } from './typings';
-import { PaginationOptions, buildAPIEndpoint } from './utils/funcs/endpoint';
-import { generateQParams } from './utils/funcs/paginate';
+import { generateQParams } from './utils/funcs/generate-q-params';
 import { removeDuplicatesFromArray } from './utils/funcs/remove-duplicates-from-array';
 import { IRequest, Request } from './utils/request';
 
@@ -74,14 +74,14 @@ export class MessariClient {
 	 * @template {type} T
 	 * @param {AssetOptions} [assetOptions] - The asset's options to be loaded in the request
 	 * @param {Array<String>} [assetOptions.metrics] - The asset's metrics to be loaded
-	 * @param {PaginationOptions} [paginationOptions] - The options to use for pagination
+	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The options to use for pagination
 	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async listAllAssets<T extends MessariAsset[] = MessariAsset[]>(
 		assetOptions?: AssetOptions,
-		paginationOptions?: PaginationOptions,
+		paginationOptions?: MessariAPIPaginationOptions,
 	): Promise<QueryResult<T>> {
 		let endpoint: string = `v2/assets?fields=${MessariClient.BASE_ASSET_FIELDS}`;
 
@@ -95,7 +95,9 @@ export class MessariClient {
 		}
 
 		if (paginationOptions)
-			endpoint += `&${generateQParams<PaginationOptions>(paginationOptions)}`;
+			endpoint += `&${generateQParams<MessariAPIPaginationOptions>(
+				paginationOptions,
+			)}`;
 
 		return this.fetchAPIData<T>(endpoint);
 	}
@@ -104,15 +106,22 @@ export class MessariClient {
 	 * Get the paginated list of latest news and analysis for all assets.
 	 *
 	 * @template {type} T
-	 * @param {PaginationOptions} [paginationOptions] - The options to use for pagination
+	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The options to use for pagination
 	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async listNewsForAllAssets(
-		paginationOptions?: PaginationOptions,
+		paginationOptions?: MessariAPIPaginationOptions,
 	): Promise<QueryResult<MessariAssetNews[]>> {
-		const endpoint: string = buildAPIEndpoint('v1/news', paginationOptions);
+		let endpoint: string = 'v1/news';
+
+		if (paginationOptions) {
+			const qParams: string =
+				generateQParams<MessariAPIPaginationOptions>(paginationOptions);
+
+			endpoint += `?${qParams}`;
+		}
 
 		return this.fetchAPIData<MessariAssetNews[]>(endpoint);
 	}
@@ -122,19 +131,23 @@ export class MessariClient {
 	 *
 	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @param {PaginationOptions} [paginationOptions] - The options to use for pagination
+	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The options to use for pagination
 	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async listNewsForAsset(
 		assetKey: string,
-		paginationOptions?: PaginationOptions,
+		paginationOptions?: MessariAPIPaginationOptions,
 	): Promise<QueryResult<MessariAssetNews[]>> {
-		const endpoint: string = buildAPIEndpoint(
-			`v1/news/${assetKey}`,
-			paginationOptions,
-		);
+		let endpoint: string = `v1/news/${assetKey}`;
+
+		if (paginationOptions) {
+			const qParams: string =
+				generateQParams<MessariAPIPaginationOptions>(paginationOptions);
+
+			endpoint += `?${qParams}`;
+		}
 
 		return this.fetchAPIData<MessariAssetNews[]>(endpoint);
 	}
