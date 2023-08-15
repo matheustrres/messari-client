@@ -3,8 +3,8 @@ import {
 	MessariAsset,
 	QueryResult,
 	MessariMarket,
-	AssetOptions,
-	AvailableMetrics,
+	MessariAPIAssetOptions,
+	MessariAPIAvailableKeyMetrics,
 	MessariAPIPaginationOptions,
 } from './typings';
 import { generateQParams } from './utils/funcs/generate-q-params';
@@ -43,13 +43,13 @@ export class MessariClient {
 	 * Get basic metadata for an asset.
 	 *
 	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @param {AssetOptions} [assetOptions] - The asset's options to be loaded in the request
+	 * @param {MessariAPIAssetOptions} [assetOptions] - The asset's options to be loaded in the request
 	 * @param {Array<String>} [assetOptions.metrics] - The asset's metrics to be loaded
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async getAsset<T extends MessariAsset = MessariAsset>(
 		assetKey: string,
-		assetOptions?: AssetOptions,
+		assetOptions?: MessariAPIAssetOptions,
 	): Promise<QueryResult<T>> {
 		let endpoint: string = `v1/assets/${assetKey}/metrics?fields=${MessariClient.BASE_ASSET_FIELDS}`;
 
@@ -72,7 +72,7 @@ export class MessariClient {
 	 * Get the paginated list of all assets and their metrics.
 	 *
 	 * @template {type} T
-	 * @param {AssetOptions} [assetOptions] - The asset's options to be loaded in the request
+	 * @param {MessariAPIAssetOptions} [assetOptions] - The asset's options to be loaded in the request
 	 * @param {Array<String>} [assetOptions.metrics] - The asset's metrics to be loaded
 	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The options to use for pagination
 	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
@@ -80,15 +80,17 @@ export class MessariClient {
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async listAllAssets<T extends MessariAsset[] = MessariAsset[]>(
-		assetOptions?: AssetOptions,
+		assetOptions?: MessariAPIAssetOptions,
 		paginationOptions?: MessariAPIPaginationOptions,
 	): Promise<QueryResult<T>> {
 		let endpoint: string = `v2/assets?fields=${MessariClient.BASE_ASSET_FIELDS}`;
 
 		if (assetOptions?.metrics?.length) {
 			const metricsQParams: string =
-				removeDuplicatesFromArray<AvailableMetrics>(assetOptions.metrics)
-					.map((metric: AvailableMetrics): string => `metrics/${metric}`)
+				removeDuplicatesFromArray<MessariAPIAvailableKeyMetrics>(
+					assetOptions.metrics,
+				)
+					.map((metric) => `metrics/${metric}`)
 					.join(',');
 
 			endpoint += `,${metricsQParams}`;
