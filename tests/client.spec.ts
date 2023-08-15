@@ -3,9 +3,10 @@ import { MockProxy, mock } from 'jest-mock-extended';
 import { MessariClient } from '../lib/client';
 import {
 	MessariAsset,
-	MessariAssetMetrics,
 	MessariAssetNews,
 	MessariMarket,
+	PickMetricsForAllAssets,
+	PickMetricsForAsset,
 	QueryResult,
 } from '../lib/typings';
 import { IRequest } from '../lib/utils/request';
@@ -62,22 +63,11 @@ describe('MessariClient', (): void => {
 			expect(response).toEqual(messariApiGetAssetResponse);
 		});
 
-		it('should get basic metadata and metrics for an asset [custom typing]', async (): Promise<void> => {
-			type MyAssetType = MessariAsset & {
-				supply: {
-					y_2050: number | null;
-					y_plus10: number | null;
-					y_2050_percent_issued: number | null;
-					supply_yplus_10: number | null;
-					y_plus10_issued_percent: number | null;
-					liquid: number | null;
-					circulating: number | null;
-					stock_to_flow: number | null;
-				};
-			};
+		it('should get basic metadata and metrics for an asset', async (): Promise<void> => {
+			type AssetWithMetrics = PickMetricsForAsset<['supply']>;
 
-			const response: QueryResult<MyAssetType> =
-				await client.getAsset<MyAssetType>('bitcoin', {
+			const response: QueryResult<AssetWithMetrics> =
+				await client.getAsset<AssetWithMetrics>('bitcoin', {
 					metrics: ['supply'],
 				});
 
@@ -105,10 +95,9 @@ describe('MessariClient', (): void => {
 	});
 
 	describe('.listAllAssets', (): void => {
-		it('should get the list of ALL assets and their metrics', async (): Promise<void> => {
-			const response: QueryResult<MessariAsset[]> = await client.listAllAssets<
-				MessariAsset[]
-			>();
+		it('should get the list of ALL assets', async (): Promise<void> => {
+			const response: QueryResult<MessariAsset[]> =
+				await client.listAllAssets();
 
 			expect(mockedRequest.get).toHaveBeenNthCalledWith(
 				4,
@@ -129,37 +118,21 @@ describe('MessariClient', (): void => {
 			expect(response).toEqual(messariApiListAllAssetsResponse);
 		});
 
-		it('should get the PAGINATED list of assets and their metrics [custom typing]', async (): Promise<void> => {
-			type MyMetrics = MessariAssetMetrics<{
-				mining_stats: {
-					mining_algo: string | null;
-					network_hash_rate: string | null;
-					available_on_nicehash_percent: number | null;
-					attack_appeal: number | null;
-					hash_rate: number | null;
-					hash_rate_30d_average: number | null;
-					mining_revenue_native: number | null;
-				};
-				developer_activity: {
-					stars: number | null;
-					watchers: number | null;
-					commits_last_3_months: number | null;
-					commits_last_1_year: number | null;
-					lines_added_last_3_months: number | null;
-				};
-			}>;
+		it('should get the PAGINATED list of assets and their metrics', async (): Promise<void> => {
+			type AllAssetsWithMetrics = PickMetricsForAllAssets<
+				['mining_stats', 'developer_activity']
+			>;
 
-			const response: QueryResult<MyMetrics[]> = await client.listAllAssets<
-				MyMetrics[]
-			>(
-				{
-					metrics: ['mining_stats', 'developer_activity'],
-				},
-				{
-					limit: 3,
-					page: 1,
-				},
-			);
+			const response: QueryResult<AllAssetsWithMetrics[]> =
+				await client.listAllAssets<AllAssetsWithMetrics[]>(
+					{
+						metrics: ['mining_stats', 'developer_activity'],
+					},
+					{
+						limit: 3,
+						page: 1,
+					},
+				);
 
 			expect(mockedRequest.get).toHaveBeenNthCalledWith(
 				5,
