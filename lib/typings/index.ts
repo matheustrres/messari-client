@@ -338,7 +338,7 @@ export type MessariAPIAvailableKeyMetrics =
 	| 'token_sale_stats';
 
 /**
- * Base result of all requests made to the Messari api
+ * Base result of all requests made to the Messari API
  *
  * @template T - Typing for an endpoint response
  */

@@ -26,12 +26,12 @@ export class MessariClient {
 	}
 
 	/**
-	 * Creates a new MessariClient instance
+	 * Create a new MessariClient instance
 	 *
-	 * @param {String} messariApiKey - A valid Messari api key
+	 * @param {String} messariApiKey - A valid Messari API key
 	 * @param {IRequest} [request] - A request class that implements IRequest
 	 * @see {@link https://curr.to/irequest-examples} to find out how to implement your own request class
-	 * @see {@link https://messari.io/api/docs} to find out how to get a valid messari api key
+	 * @see {@link https://messari.io/api/docs} to find out how to get a valid Messari API key
 	 */
 	constructor(messariApiKey: string, request?: IRequest) {
 		MessariClient.validate(messariApiKey);
@@ -40,10 +40,11 @@ export class MessariClient {
 	}
 
 	/**
-	 * Get basic metadata for an asset.
+	 * Get basic metadata and metrics for an asset
 	 *
-	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @param {MessariAPIAssetOptions} [assetOptions] - The asset's options to be loaded in the request
+	 * @template {type} T
+	 * @param {string} assetKey The asset's ID, slug or symbol
+	 * @param {MessariAPIAssetOptions} [assetOptions] - The API asset's options for the request
 	 * @param {Array<String>} [assetOptions.metrics] - The asset's metrics to be loaded
 	 * @returns {Promise<QueryResult<T>>}
 	 */
@@ -69,14 +70,14 @@ export class MessariClient {
 	}
 
 	/**
-	 * Get the paginated list of all assets and their metrics.
+	 * Get the list of all assets and their metrics
 	 *
 	 * @template {type} T
-	 * @param {MessariAPIAssetOptions} [assetOptions] - The asset's options to be loaded in the request
-	 * @param {Array<String>} [assetOptions.metrics] - The asset's metrics to be loaded
-	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The options to use for pagination
-	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
-	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
+	 * @param {MessariAPIAssetOptions} [assetOptions] - The API assets' options for the request
+	 * @param {Array<String>} [assetOptions.metrics] - The assets' metrics to be loaded
+	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The API options for pagination
+	 * @param {Number} [paginationOptions.page] - The start page for pagination, defaults to 1
+	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned, default is 20 and max is 500
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async listAllAssets<T extends MessariAsset[] = MessariAsset[]>(
@@ -105,12 +106,12 @@ export class MessariClient {
 	}
 
 	/**
-	 * Get the paginated list of latest news and analysis for all assets.
+	 * List all the latest news and analysis for all assets
 	 *
 	 * @template {type} T
-	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The options to use for pagination
-	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
-	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
+	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The API options for pagination
+	 * @param {Number} [paginationOptions.page] - The start page for pagination, defaults to 1
+	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned, default is 20 and max is 500
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async listNewsForAllAssets(
@@ -129,13 +130,13 @@ export class MessariClient {
 	}
 
 	/**
-	 * Get the paginated list of latest news and analysis for an asset.
+	 * List all the latest news and analysis for an asset
 	 *
 	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
-	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The options to use for pagination
-	 * @param {Number} [paginationOptions.page] - Page number to paginate, starts at 1
-	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned; default is 20 and max is 500 items
+	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The API options for pagination
+	 * @param {Number} [paginationOptions.page] - The start page for pagination, defaults to 1
+	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned, default is 20 and max is 500
 	 * @returns {Promise<QueryResult<T>>}
 	 */
 	public async listNewsForAsset(
