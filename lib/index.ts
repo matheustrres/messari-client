@@ -1,4 +1,5 @@
-export type {
+import { MessariClient } from './client';
+import type {
 	PickMetricsForAllAssets,
 	PickMetricsForAsset,
 	MessariAsset,
@@ -26,5 +27,35 @@ export type {
 	MessariAPIMarketOHLCVMetrics,
 	QueryResult,
 } from './typings';
-export { IRequest } from './utils/request';
-export * from './client';
+import { IRequest } from './utils/request';
+
+export {
+	PickMetricsForAllAssets,
+	PickMetricsForAsset,
+	MessariAsset,
+	MessariMarket,
+	MessariAssetNews,
+	MessariAPIAllTimeHighMetrics,
+	MessariAPIROIDataMetrics,
+	MessariAPIBlockchainStats24HoursMetrics,
+	MessariAPICycleLowMetrics,
+	MessariAPIDeveloperActivityMetrics,
+	MessariAPIExchangeFlowsMetrics,
+	MessariAPIMarketCapMetrics,
+	MessariAPIMarketDataMetrics,
+	MessariAPIMarketDataLiquidityMetrics,
+	MessariAPIMinerFlowsMetrics,
+	MessariAPIMiningStatsMetrics,
+	MessariAPIMiscDataMetrics,
+	MessariAPIOnChainDataMetrics,
+	MessariAPIRedditMetrics,
+	MessariAPIRiskMetrics,
+	MessariAPIROIByYearMetrics,
+	MessariAPISupplyMetrics,
+	MessariAPISupplyActivityMetrics,
+	MessariAPITokenSaleStatsMetrics,
+	MessariAPIMarketOHLCVMetrics,
+	QueryResult,
+	IRequest,
+	MessariClient,
+};
