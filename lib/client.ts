@@ -108,7 +108,6 @@ export class MessariClient {
 	/**
 	 * List all the latest news and analysis for all assets
 	 *
-	 * @template {type} T
 	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The API options for pagination
 	 * @param {Number} [paginationOptions.page] - The start page for pagination, defaults to 1
 	 * @param {Number} [paginationOptions.limit] - The limit number of items to be returned, default is 20 and max is 500
@@ -132,7 +131,6 @@ export class MessariClient {
 	/**
 	 * List all the latest news and analysis for an asset
 	 *
-	 * @template {type} T
 	 * @param {string} assetKey - The asset's ID, slug or symbol
 	 * @param {MessariAPIPaginationOptions} [paginationOptions] - The API options for pagination
 	 * @param {Number} [paginationOptions.page] - The start page for pagination, defaults to 1
