@@ -10,6 +10,7 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
     "removeComments": true,
     "noImplicitReturns": true,
