@@ -2,7 +2,7 @@
 
 A Node.js client for fetching cryptocurrency data from **[Messari API](https://messari.io/dashboard)**, which provides crypto research, data and tools.
 
-**NOTE**: This project has been deprecated due to Messari API's endpoints is now only accessible for Enterprise users.
+**NOTE**: This project is now deprecated due to Messari API endpoints have become only accessible for Enterprise users.
 
 ## Stay in touch
 
